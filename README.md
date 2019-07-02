@@ -1,2 +1,2 @@
 # SerendipityV2
-Serendipity-FocusedRecommender System
+Serendipity-Focused Recommender System
