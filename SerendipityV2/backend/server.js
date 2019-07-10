@@ -54,3 +54,33 @@ app.get('/api/stage', (req, res) => {
     });
   }
 });
+
+app.get('/api/categories', (req, res) => {
+  let db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE, (err) => {
+    if (err) {
+      return console.error(err.message);
+    }
+    console.log('Connected to the SQlite database.');
+  });
+
+  let sql = 'SELECT * FROM categories;';
+
+  db.all(sql, (err, rows) => {
+    if (rows) {
+      res.send({categories: rows});
+    } else {
+      res.send("Backend Error");
+    }
+  });
+
+  db.close((err) => {
+    if (err) {
+      return console.error(err.message);
+    }
+    console.log("Closed the database connection.");
+  });
+});
+
+app.post('/api/users', (req, res) => {
+
+});
