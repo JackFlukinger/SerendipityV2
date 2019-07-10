@@ -13,4 +13,8 @@ export interface User {
 export class UserService {
 
   constructor() { }
+
+  newUser() {
+
+  }
 }

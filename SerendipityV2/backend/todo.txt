@@ -1,0 +1,7 @@
+Backend Todo:
+
+Create new user
+  Validate, put in database
+  Generate random movies
+
+Handle random movie numratings

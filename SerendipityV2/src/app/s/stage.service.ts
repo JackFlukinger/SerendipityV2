@@ -16,7 +16,7 @@ export class StageService {
   ) { }
 
   public updateStage() {
-    this.http.get("http://localhost:8000/api/users").subscribe(
+    this.http.get("http://localhost:8000/api/stage").subscribe(
       data  => {
         this.stage.next((data as any).stage);
         console.log(this.stage);
