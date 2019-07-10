@@ -17,7 +17,7 @@ export class CategoriesService {
     private http: HttpClient
   ) { }
 
-  public loadCategories() {
+  public loadCategories(callback) {
     this.http.get("http://localhost:8000/api/categories").subscribe(
       data  => {
         let cats = {}; //Populated with categories
@@ -33,7 +33,6 @@ export class CategoriesService {
         (data as any).categories.forEach(category => {
           if (category.parentID != null) {
             let id = parseInt(category.baseID);
-            console.log(id);
             let name = category.categoryName;
             let parentID = parseInt(category.parentID);
             let children:Category[] = [];
@@ -41,6 +40,7 @@ export class CategoriesService {
             cats[parentID].children.push(cat);
           }
         });
+        callback(cats);
     }, error  => {
       console.log("Error retrieving categories:", error);
     });

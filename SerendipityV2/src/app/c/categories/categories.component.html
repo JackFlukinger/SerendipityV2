@@ -34,7 +34,7 @@
 
          <div class = "categories">
             <h2 class = "formField"> Please select <i>at least 3</i> of your normally purchased categories.</h2>
-            <input type="button" class="catBtn" *ngFor = "let cat of allCategories; let i = index" id="{{ i }}" [ngClass]="this.likedcategories.indexOf(i) > -1 ? 'selected' : ''" (click)="toggleCat(i)" value ="{{ cat }}">
+            <input type="button" class="catBtn" *ngFor="let category of categories; let i = index" id="{{ i }}" [ngClass]="this.likedcategories.indexOf(i) > -1 ? 'selected' : ''" (click)="toggleCat(i)" value ="{{ category.name }}">
 
             </div>
          <input type="submit" *ngIf="profileForm.valid" value="next>" [@slide]>

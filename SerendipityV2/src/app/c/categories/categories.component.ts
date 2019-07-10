@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { UserService, User } from 'src/app/s/user.service';
-import { CategoriesService } from '../../s/categories.service';
+import { Category, CategoriesService } from '../../s/categories.service';
 
 @Component({
   selector: 'app-categories',
@@ -23,6 +23,9 @@ import { CategoriesService } from '../../s/categories.service';
 ]
 })
 export class CategoriesComponent implements OnInit {
+
+  categories: Category[] = [];
+
   constructor(
     private fb: FormBuilder,
     private CategoriesService: CategoriesService
@@ -32,7 +35,6 @@ export class CategoriesComponent implements OnInit {
   profileForm: FormGroup;
 
   likedcategories: number[];
-  allCategories: any[]
 
   
   populateCategories(){
@@ -59,7 +61,6 @@ export class CategoriesComponent implements OnInit {
 
   ngOnInit() {
     this.showDropdown = false;
-    this.allCategories = this.populateCategories();
     this.likedcategories=[]
 
     this.profileForm = this.fb.group({
@@ -67,6 +68,11 @@ export class CategoriesComponent implements OnInit {
       gender: ['', [Validators.required, Validators.pattern("Male|Female|Other")]],
       email: ['', [Validators.required, Validators.email]]
     });
+
+    this.CategoriesService.loadCategories(cats => {
+      for (const [key, value] of Object.entries(cats)) {
+        this.categories.push(<Category> value);
+      }});
   }
 
   onSubmit(){
