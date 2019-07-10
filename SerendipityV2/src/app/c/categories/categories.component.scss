@@ -1,0 +1,133 @@
+label, .formField{
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.3em;
+    font-weight: lighter;
+    margin: 0.5em;
+    text-align: center;
+    list-style: none;
+    padding: 10px;
+}
+
+.content{
+    width: 90%;
+}
+.categories{
+  margin: auto;
+  padding:20px;
+  border-bottom: 5px solid black;
+}
+
+.catBtn{
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.3em;
+  font-weight: lighter;
+  margin: 0;
+  background: white;
+  width: 80%;
+  padding: 25px;
+  transition: .2s;
+  text-align: center;
+  border: none;
+}
+
+.catBtn:hover {
+  box-shadow: 0px 0px 3px black inset;
+  cursor: pointer;
+}
+
+.selected {
+  background: lightgreen;
+}
+
+
+form{
+    text-align: center;
+}
+
+input {
+  font-family: 'Roboto', sans-serif;
+  border: 0px;
+  border-bottom: 1px solid black;
+  font-size: 1.3em;
+}
+
+input[type=text], input[type=number], input[type=email] {
+  width: 33%;
+  margin-top: 20px;
+}
+
+input:focus {
+  outline: none;
+}
+
+
+input[type=submit] {
+  border: none;
+  font-family: 'Major Mono Display', monospace;
+  padding: 10px 50px;
+  color: black;
+  font-size: 1.5em;
+  background-color: lightgrey;
+  transition: .2s;
+  float: right;
+
+  &:hover{
+    font-family: 'Major Mono Display', monospace;
+    box-shadow: 0px 0px 2px black inset;
+    cursor: pointer;
+  }
+
+}
+
+.dropdownContainer {
+  margin: 0;
+  display: inline-block;
+  width: 33%;
+}
+
+.dropdown {
+  width: 33%;
+  position: absolute;
+  left: 33%;
+  background: black;
+  color: white;
+  text-align: left;
+  padding-left: 10px;
+  padding-top: 10px;
+  overflow-y: hidden;
+}
+
+.dropdownItem {
+  list-style: none;
+  font-size: 1em;
+  font-family: 'Roboto', sans-serif;
+  margin-bottom: 10px;
+}
+
+.dropdownItem:hover {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.bioItems{
+  position: relative;
+  padding: 0px 20px;
+}
+
+
+.invalidInput{
+  font-family: 'Roboto', sans-serif;
+  list-style: none;
+  padding-left:10px;
+  border-left: 5px solid #a94442; /* red */
+  width: 50%;
+  margin-top: 1em;
+}
+
+p {
+  overflow-y: hidden;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  padding-top: .5em;
+  padding-bottom: .5em;
+}
