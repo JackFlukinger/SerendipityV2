@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { UserService, User } from 'src/app/s/user.service';
+import { CategoriesService } from '../../s/categories.service';
 
 @Component({
   selector: 'app-categories',
@@ -24,7 +25,7 @@ import { UserService, User } from 'src/app/s/user.service';
 export class CategoriesComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
-    private userservice: UserService
+    private CategoriesService: CategoriesService
   ) { }
 
   showDropdown: boolean;
@@ -98,6 +99,6 @@ export class CategoriesComponent implements OnInit {
     }
     console.log("Has been clicked" + index);
     console.log(this.likedcategories);
-  }
 
+}
 }

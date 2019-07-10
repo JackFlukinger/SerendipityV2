@@ -1,7 +1,12 @@
 Backend Todo:
 
+Pull/read all categories
+
 Create new user
   Validate, put in database
   Generate random movies
 
-Handle random movie numratings
+Handle random item rating
+  Validate, put in Database
+  Remove item from random item listen
+  Add item to random ratings table

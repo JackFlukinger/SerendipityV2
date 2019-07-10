@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Observable, BehaviorSubject } from 'rxjs';
+
 
 export interface Item {
   id: string,
@@ -16,5 +18,16 @@ export interface Item {
 })
 export class ItemService {
 
+  //private item: BehaviorSubject<Item> = new BehaviorSubject<Item>();
+  //public $item: Observable<Item> = this.item.asObservable();
+
   constructor() { }
+
+  public updateItem(rating: number) {
+    if (rating > 0) { //user is rating current item
+
+    } else { //user is just getting new item
+
+    }
+  }
 }
