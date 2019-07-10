@@ -36,28 +36,6 @@ export class CategoriesComponent implements OnInit {
 
   likedcategories: number[];
 
-  
-  populateCategories(){
-    let cats = [
-      "Automotive",
-      "Baby",
-      "Beauty",
-      "Cell Phones & Accessories",
-      "Clothing, Shoes & Jewelry",
-      "Electronics",
-      "Grocery & Gourmet Food",
-      "Health & Personal Care",
-      "Home and Kitchen",
-      "Musical Instruments",
-      "Office Products",
-      "Patio Lawn & Garden",
-      "Pet Supplies",
-      "Sports & Outdoors",
-      "Tools & Home Improvement",
-      "Toys & Games"
-    ]
-     return cats
-  }
 
   ngOnInit() {
     this.showDropdown = false;

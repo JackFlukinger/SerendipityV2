@@ -34,7 +34,7 @@
 
          <div class = "categories">
             <h2 class = "formField"> Please select <i>at least 3</i> of your normally purchased categories.</h2>
-            <input type="button" class="catBtn" *ngFor="let category of categories; let i = index" id="{{ i }}" [ngClass]="this.likedcategories.indexOf(i) > -1 ? 'selected' : ''" (click)="toggleCat(i)" value ="{{ category.name }}">
+            <input type="button" class="catBtn" *ngFor="let category of categories;" id="{{ category.id }}" [ngClass]="this.likedcategories.indexOf(category.id) > -1 ? 'selected' : ''" (click)="toggleCat(category.id)" value ="{{ category.name }}">
 
             </div>
          <input type="submit" *ngIf="profileForm.valid" value="next>" [@slide]>
@@ -47,6 +47,6 @@
         <p *ngIf="!this.profileForm.get('gender').valid && (this.profileForm.get('gender').touched || this.profileForm.get('gender').dirty)" [@slide]>Invalid Gender</p>
         <p *ngIf="!this.profileForm.get('email').valid && (this.profileForm.get('email').touched || this.profileForm.get('email').dirty)" [@slide]>Invalid Email</p>
         <p *ngIf="(this.getNumOfLikedCategories() < 3 && (this.getNumOfLikedCategories() > 0 || (this.profileForm.touched || this.profileForm.dirty)))" [@slide]>Please select at least three genres!</p>
-        <p *ngIf="this.userservice.serverError" [@slide]>Invalid input</p>
+        <p *ngIf="this.CategoriesService.serverError" [@slide]>Invalid input</p>
       </div>
 </div>

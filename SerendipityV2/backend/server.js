@@ -6,7 +6,7 @@ const sqlite3 = require('sqlite3').verbose();
 
 const app = express();
 
-const dbPath = '../.././serendipityDatabase.db';
+const dbPath = '../../../serendipityDatabase.db';
 
 var corsOptions = {
   origin: 'http://localhost:4200',
