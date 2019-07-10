@@ -39,8 +39,8 @@ export class AppComponent {
   ) { }
 
   ngOnInit() {
-    //this.backend.updateStage();
-    //console.log(this.$stage);
+    this.StageService.updateStage();
+    console.log(this.StageService.$stage);
   }
 
 }
