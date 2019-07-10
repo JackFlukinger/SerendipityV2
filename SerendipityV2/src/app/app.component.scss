@@ -1,0 +1,25 @@
+.definition {
+  z-index: 10;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: inherit;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.5em;
+  font-weight: lighter;
+}
+
+.transparent {
+  transition: .2s ease-in;
+  opacity: 0;
+}
+
+.opaque {
+  transition: .2s .2s ease-in;
+  opacity: 1;
+}
+
+app-categories, app-random, app-serendipitous {
+  display: inline-block;
+}
