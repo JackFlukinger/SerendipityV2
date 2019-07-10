@@ -4,7 +4,7 @@ Pull/read all categories
 
 Create new user
   Validate, put in database
-  Generate random movies
+  Generate random items
 
 Handle random item rating
   Validate, put in Database

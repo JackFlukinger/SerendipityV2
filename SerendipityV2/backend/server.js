@@ -82,5 +82,62 @@ app.get('/api/categories', (req, res) => {
 });
 
 app.post('/api/users', (req, res) => {
+  console.log("trying to create user");
 
+  let email = req.body.email;
+  let age = req.body.age;
+  let gender = req.body.gender;
+  let categories = req.body.categories;
+
+  //Validation checks
+  if ((age<0 || age>100) || !email.includes('@') || !email.includes('.') || !(gender == 'Male' || gender =='Female' || gender == 'Other') || categories.length < 10){
+
+    res.send({result: "failure"});
+  } else {
+
+    console.log(email, age, gender, categories);
+
+    let db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE, (err) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log('Connected to the SQlite database.');
+    });
+
+    //SQL to generate the random movies for the random recommender
+    let randomSQL = 'SELECT itemID FROM items ORDER BY RANDOM() LIMIT 100;';
+
+    db.all(randomSQL, (err, rows) => {
+      if (err) {
+        throw err;
+      }
+      let randomMovies = [];
+      rows.forEach((row) => {
+        randomMovies.push(row.itemID);
+      });
+
+      let sql = 'INSERT INTO users(email, gender, age, stage, interestedCategories, RRSitems) VALUES (\'' +
+      email + '\', \'' +
+      gender + '\', \'' +
+      age + '\', \'' +
+      '2' + '\', \'' +
+      categories + '\', \'' +
+      randomMovies + '\');';
+
+      db.run(sql, function(err) {
+        if (err) {
+          res.send({result: "failure"});
+        } else {
+          res.cookie('email', email, { maxAge: 315360000000, httpOnly: false }).send({"result": "success"});
+        }
+      });
+    });
+
+    db.close((err) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log('Closed the database connection.');
+    });
+  }
 });
