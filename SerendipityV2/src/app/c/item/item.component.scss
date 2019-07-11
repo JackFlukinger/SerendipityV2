@@ -36,7 +36,15 @@ input:focus {
 }
 
 .y:hover {
-  background-color: #386f38
+  background-color: #386f38;
+}
+
+.selected-y{
+  background-color:#386f38;
+}
+
+.selected-n{
+  background-color: #a94442;
 }
 
 .n:hover {
@@ -66,4 +74,21 @@ input:focus {
   text-align: center;
   position: relative;
   padding: 10px;
+  border-right: 1px solid #00000030;
+  border-top: 1px solid #00000030;
+}
+
+.iteminfo{
+  font-family: 'Roboto', sans-serif;
+}
+#itemname{
+  font-size: 1.5em;
+}
+
+#itemdescription{
+  font-size: 1.2em;
+}
+
+#itemprice{
+  font-size: 1.3em;
 }
