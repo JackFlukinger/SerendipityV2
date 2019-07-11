@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-random',
-  templateUrl: './random.component.html',
-  styleUrls: ['./random.component.scss']
+  templateUrl: './item.component.html',
+  styleUrls: ['./item.component.scss']
 })
-export class RandomComponent implements OnInit {
+export class ItemComponent implements OnInit {
 
   constructor() { }
 
