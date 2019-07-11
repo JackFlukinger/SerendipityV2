@@ -143,3 +143,123 @@ app.post('/api/users', (req, res) => {
     });
   }
 });
+
+app.get('/api/item', (req, res) => {
+  let user = req.cookies.email;
+  console.log("trying to fetch item for user " + user);
+
+  if (user == undefined) {
+    res.send({result: "failure"});
+  } else {
+    let db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE, (err) => {
+      if (err) {
+        res.send({result: "failure"});
+        return console.error(err.message);
+      }
+      console.log('Connected to the SQlite database.');
+    });
+
+    let sql = 'SELECT RRSitems, SRSitems FROM users WHERE email=\''+ user + '\';';
+
+    db.get(sql, (err, row) => {
+      if (row) {
+
+        if (row.RRSitems != undefined) {
+          let firstItem = row.RRSitems.split(",")[0];
+          console.log(firstItem);
+          let querySql = 'SELECT * FROM items WHERE itemID=\'' + firstItem + '\';';
+
+          db.get(querySql, (err, row) => {
+            if (row) {
+              console.log(row);
+              res.send({result: 'success', item: row});
+            } else {
+              res.send({result: 'failure'});
+            }
+          });
+
+        } else if (row.RRSitems == undefined && row.SRSitems != undefined) {
+          let firstItem = row.SRSitems.split(",")[0];
+          console.log(firstItem);
+          let querySql = 'SELECT * FROM items WHERE itemID=\'' + firstItem + '\';';
+
+          db.get(querySql, (err, row) => {
+            if (row) {
+              console.log(row);
+              res.send({result: 'success', item: row});
+            } else {
+              res.send({result: 'failure'});
+            }
+          });
+        } else if (row.RRSitems == undefined && row.SRSitems == undefined) { //Ratings have been completed
+
+          let doneSql = 'UPDATE users SET stage=\'3\' WHERE email = \'' + user + '\';';
+
+          db.run(doneSql, function(err) {
+            if (err) {
+              console.log(err);
+              res.send({result: "failure"});
+            } else {
+              res.send({result: "nextstage"});
+            }
+          });
+
+        }
+      } else {
+        res.send("Backend Error");
+      }
+    });
+
+    db.close((err) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log("Closed the database connection.");
+    });
+  }
+});
+
+app.post('/api/item', (req, res) => {
+  let user = req.cookies.email;
+  console.log("trying to fetch item for user " + user);
+
+  if (user == undefined) {
+    res.send({result: "failure"});
+  } else {
+
+    let wouldBuy = parseInt(req.body.wouldBuy);
+    let haveHeard = parseInt(req.body.haveHeard);
+    let noRecNeeded = parseInt(req.body.noRecNeeded);
+
+    let db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE, (err) => {
+      if (err) {
+        res.send({result: "failure"});
+        return console.error(err.message);
+      }
+      console.log('Connected to the SQlite database.');
+    });
+
+
+    let sql = 'SELECT (RRSitems, SRSitems) FROM users WHERE email=\''+ user + '\';';
+
+    db.all(sql, (err, rows) => {
+      if (rows) { //Process withdrawn items
+
+        console.log(rows);
+
+
+      } else {
+        res.send("Backend Error");
+      }
+    });
+
+    db.close((err) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log("Closed the database connection.");
+    });
+
+  }
+
+});
