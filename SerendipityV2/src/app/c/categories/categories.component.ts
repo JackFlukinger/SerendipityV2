@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { trigger, style, animate, transition } from '@angular/animations';
-import { UserService, User } from 'src/app/s/user.service';
 import { Category, CategoriesService } from '../../s/categories.service';
+import { User, UserService } from '../../s/user.service';
 
 @Component({
   selector: 'app-categories',
@@ -28,18 +28,23 @@ export class CategoriesComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private CategoriesService: CategoriesService
+    private CategoriesService: CategoriesService,
+    private UserService: UserService
   ) { }
 
   showDropdown: boolean;
+  selectedCategory: number;
   profileForm: FormGroup;
+  serverError: boolean;
 
   likedcategories: number[];
 
 
   ngOnInit() {
     this.showDropdown = false;
+    this.selectedCategory = -1;
     this.likedcategories=[]
+    this.serverError = false;
 
     this.profileForm = this.fb.group({
       age: ['', [Validators.required, Validators.min(0), Validators.max(110)]],
@@ -67,15 +72,20 @@ export class CategoriesComponent implements OnInit {
     console.log(user);
 
     //add user to backend using service
-    //this.userservice.newUser()
+    this.UserService.newUser(user, fun => {
+      this.serverError = true;
+    });
   }
 
-  getNumOfLikedCategories(){
-    return 3;
-    //return this.likedgenres.length;
+  toggleBigCat(index:number){
+    if (this.selectedCategory == index) {
+        this.selectedCategory = -1;
+    } else {
+      this.selectedCategory = index;
+    }
   }
 
-  toggleCat(index:number){
+  toggleSubCat(index:number) {
     if (this.likedcategories.indexOf(index) != -1) {
       this.likedcategories.splice(this.likedcategories.indexOf(index), 1);
     } else {
@@ -83,6 +93,5 @@ export class CategoriesComponent implements OnInit {
     }
     console.log("Has been clicked" + index);
     console.log(this.likedcategories);
-
-}
+  }
 }

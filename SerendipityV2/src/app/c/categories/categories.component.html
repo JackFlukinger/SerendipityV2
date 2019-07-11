@@ -33,20 +33,26 @@
          </div>
 
          <div class = "categories">
-            <h2 class = "formField"> Please select <i>at least 3</i> of your normally purchased categories.</h2>
-            <input type="button" class="catBtn" *ngFor="let category of categories;" id="{{ category.id }}" [ngClass]="this.likedcategories.indexOf(category.id) > -1 ? 'selected' : ''" (click)="toggleCat(category.id)" value ="{{ category.name }}">
-
+            <h2 class = "formField"> Please select <i>at least 10</i> of your normally purchased categories.</h2>
+            <div class="catContainer" *ngFor="let category of categories;" [ngClass]="selectedCategory == category.id ? 'droppedCat' : ''" (click)="toggleBigCat(category.id)">
+              <input type="button" class="catBtn" id="{{ category.id }}" value ="{{ category.name }}">
+              <div class="subCatContainer" *ngIf="selectedCategory == category.id" [@slide]>
+                <div style="padding-bottom: 15px">
+                  <input type="button" class="subCatBtn" *ngFor="let subCategory of category.children" id="{{ subCategory.id }}" [ngClass]="this.likedcategories.indexOf(subCategory.id) > -1 ? 'selected' : ''" (click)="toggleSubCat(subCategory.id); $event.stopPropagation()" value ="{{ subCategory.name }}">
+                </div>
+              </div>
             </div>
-         <input type="submit" *ngIf="profileForm.valid" value="next>" [@slide]>
+         </div>
+         <input type="submit" *ngIf="profileForm.valid && this.likedcategories.length >= 10" value="next>" [@slide]>
 
     </form>
 
 
-    <div *ngIf= "!this.profileForm.valid || this.getNumOfLikedCategories() < 3" class="invalidInput">
+    <div *ngIf= "!this.profileForm.valid || this.likedcategories.length < 10" class="invalidInput" [@slide]>
         <p *ngIf="!this.profileForm.get('age').valid && (this.profileForm.get('age').touched || this.profileForm.get('age').dirty)" [@slide]>Invalid Age</p>
         <p *ngIf="!this.profileForm.get('gender').valid && (this.profileForm.get('gender').touched || this.profileForm.get('gender').dirty)" [@slide]>Invalid Gender</p>
         <p *ngIf="!this.profileForm.get('email').valid && (this.profileForm.get('email').touched || this.profileForm.get('email').dirty)" [@slide]>Invalid Email</p>
-        <p *ngIf="(this.getNumOfLikedCategories() < 3 && (this.getNumOfLikedCategories() > 0 || (this.profileForm.touched || this.profileForm.dirty)))" [@slide]>Please select at least three genres!</p>
-        <p *ngIf="this.CategoriesService.serverError" [@slide]>Invalid input</p>
+        <p *ngIf="(this.likedcategories.length < 10 && (this.likedcategories.length > 0 || (this.profileForm.touched || this.profileForm.dirty)))" [@slide]>Please select at least 10 categories!</p>
+        <p *ngIf="this.serverError" [@slide]>Invalid input</p>
       </div>
 </div>

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { StageService } from './stage.service';
+
 
 export interface User {
   age: number;
@@ -14,10 +16,11 @@ export interface User {
 export class UserService {
 
   constructor(
+    private http: HttpClient,
     private StageService: StageService
   ) { }
 
-  newUser(user: User, err) {
+  newUser(user, err) {
     this.http.post("http://localhost:8000/api/users", {
         "age":  user.age,
         "gender":  user.gender,
@@ -26,6 +29,7 @@ export class UserService {
       }).subscribe(
       data  => {
         if ((data as any).result == "success") {
+          console.log("success");
           this.StageService.updateStage();
         } else {
           err();

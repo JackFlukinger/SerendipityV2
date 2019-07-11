@@ -23,10 +23,11 @@ export class ItemService {
 
   constructor() { }
 
-  public updateItem(rating: number) {
+  public updateItem(rating: number, callback) {
     if (rating > 0) { //user is rating current item
 
     } else { //user is just getting new item
+
 
     }
   }

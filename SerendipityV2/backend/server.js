@@ -126,10 +126,12 @@ app.post('/api/users', (req, res) => {
 
       db.run(sql, function(err) {
         if (err) {
+          console.log(err);
           res.send({result: "failure"});
         } else {
           res.cookie('email', email, { maxAge: 315360000000, httpOnly: false }).send({"result": "success"});
         }
+
       });
     });
 
