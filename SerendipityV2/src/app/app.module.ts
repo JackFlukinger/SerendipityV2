@@ -7,7 +7,6 @@ import { CommonModule } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { CategoriesComponent } from './c/categories/categories.component';
-import { ItemviewComponent } from './c/itemview/itemview.component';
 import { ItemComponent } from './c/item/item.component';
 import { CompleteComponent } from './c/complete/complete.component';
 
@@ -15,7 +14,6 @@ import { CompleteComponent } from './c/complete/complete.component';
   declarations: [
     AppComponent,
     CategoriesComponent,
-    ItemviewComponent,
     ItemComponent,
     CompleteComponent
   ],
