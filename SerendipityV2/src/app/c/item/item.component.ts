@@ -36,6 +36,8 @@ export class ItemComponent implements OnInit {
   q2answer: boolean;
   q3answer: boolean;
 
+  responses: string[];
+
 
   constructor(
     private ItemService:ItemService,
@@ -53,6 +55,15 @@ export class ItemComponent implements OnInit {
     this.ItemService.getItem(func => {
       this.loading = false;
     });
+  }
+
+  submitRating(){
+    let wouldBuy = this.q1answer.toString();
+    let haveHeard = this.q2answer.toString();
+    let noRecNeeded = this.q3answer.toString();
+    
+    //this.ItemService.updateItem(wouldBuy, haveHeard, noRecNeeded,(func => {}));
+    console.log([wouldBuy, haveHeard, noRecNeeded]);
   }
 
 }
