@@ -1,33 +1,32 @@
-<div class= 'pagecont'>
-    <h2>Please answer the following questions about this item.</h2>
-    
-        <div class = "itemContainer" *ngIf="!loading" [@slideInOut]>
-            <img src='{{(ItemService.$item | async)?.image}}' alt = '{{(ItemService.$item | async)?.name}} image' height = '50%' width = '50%'>
-            <p id="itemname">{{(ItemService.$item | async)?.name}}</p>
-            <p id="itemprice">{{(ItemService.$item | async)?.price}}</p>
-            <p id="itemimage">{{(ItemService.$item | async)?.image}}</p>
-        </div>
-
-        <div class="questions">
-            <h2>1) Would you buy this item?</h2>
-            <input type='button' [ngClass]="this.q1answer? 'selected':''" (click)="q1answer=true;" value='y'>
-            <input type='button' [ngClass]="this.q1answer? 'selected':''" value='n'>
-        </div>
-
-        <div class="questions">
-            <h2>2) I have heard of this product already?</h2>
-            <input type= 'button' value='y'>
-            <input type= 'button' value='n'>
-        </div>
-
-        <div class="questions">
-            <h2>3) I would have purchased this product without your recommendation?</h2>
-            <input type='button' value='y'>
-            <input type='button' value='n'>
-        </div>
-
-
-
+<div class="itemview" *ngIf="!loading" [@slideInOut]>
+    <img id="itemimage" src='{{(ItemService.$item | async)?.image}}' alt = '{{(ItemService.$item | async)?.name}} image'>
+    <div>
+      <p id="itemname">{{(ItemService.$item | async)?.name}}</p>
+      <p id="itemprice">{{(ItemService.$item | async)?.price}}</p>
+      <p id="itemdescription">{{(ItemService.$item | async)?.description}}</p>
+    </div>
 </div>
+<div class="questionsContainer">
+  <div class="questions">
+      <h2>I would buy this item.</h2>
+      <div class="choices">
+        <input type='button' [ngClass]="this.q1answer? 'selected':''" (click)="q1answer=true;" class="y" value='yes'>
+        <input type='button' [ngClass]="this.q1answer? 'selected':''" class="n" value='no'>
+      </div>
+  </div>
 
+  <div class="questions" *ngIf="this.q1answer != null">
+      <h2>I have heard of this product already.</h2>
+      <div class="choices">
+        <input type= 'button' class="y" value='yes'>
+        <input type= 'button' class="n" value='no'>
+      </div>
+  </div>
 
+  <div class="questions" *ngIf="this.q2answer != null">
+      <h2>I would have purchased this product without a recommendation</h2>
+      <div class="choices">
+        <input type='button' class="y" value='yes'>
+        <input type='button' class="n" value='no'>
+      </div>
+  </div>

@@ -50,9 +50,9 @@ export class ItemComponent implements OnInit {
 
 
   ngOnInit() {
-    this.q1answer = false;
-    this.q2answer = false;
-    this.q3answer = false;
+    this.q1answer = null;
+    this.q2answer = null;
+    this.q3answer = null;
 
 
     this.loading = true;
