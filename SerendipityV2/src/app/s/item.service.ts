@@ -53,9 +53,9 @@ export class ItemService {
     callback();
   }
 
-  public rateItem(itemID: string, wouldBuy: boolean, haveHeard: boolean, noRecNeeded: boolean, callback) {
+  public rateItem(wouldBuy: boolean, haveHeard: boolean, noRecNeeded: boolean, callback) {
     this.http.post("http://localhost:8000/api/item", {
-        "itemID": itemID,
+        "itemID": this.item.value.id,
         "wouldBuy":  wouldBuy,
         "haveHeard":  haveHeard,
         "noRecNeeded":  noRecNeeded

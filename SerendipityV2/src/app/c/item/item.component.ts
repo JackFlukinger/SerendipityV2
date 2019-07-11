@@ -58,11 +58,11 @@ export class ItemComponent implements OnInit {
   }
 
   submitRating(){
-    let wouldBuy = this.q1answer.toString();
-    let haveHeard = this.q2answer.toString();
-    let noRecNeeded = this.q3answer.toString();
-    
-    //this.ItemService.updateItem(wouldBuy, haveHeard, noRecNeeded,(func => {}));
+    let wouldBuy = this.q1answer;
+    let haveHeard = this.q2answer;
+    let noRecNeeded = this.q3answer;
+
+    this.ItemService.rateItem(wouldBuy, haveHeard, noRecNeeded, func => {});
     console.log([wouldBuy, haveHeard, noRecNeeded]);
   }
 

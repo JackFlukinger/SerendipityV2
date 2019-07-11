@@ -228,9 +228,9 @@ app.post('/api/item', (req, res) => {
   } else {
 
     let itemID = req.body.itemID;
-    let wouldBuy = parseInt(req.body.wouldBuy);
-    let haveHeard = parseInt(req.body.haveHeard);
-    let noRecNeeded = parseInt(req.body.noRecNeeded);
+    let wouldBuy = req.body.wouldBuy;
+    let haveHeard = req.body.haveHeard;
+    let noRecNeeded = req.body.noRecNeeded;
 
     let db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE, (err) => {
       if (err) {
