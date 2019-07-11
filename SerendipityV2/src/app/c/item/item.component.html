@@ -1,1 +1,24 @@
-<p>item works!</p>
+<div class= 'content'>
+    <h2 class = 'content'>Please answer the following questions about this item.</h2>
+    
+        <div *ngIf="(ItemService.$item | async)" [@slideInOut]>
+            <div class = "itemcard">
+                <img src='item.image' alt = 'item.name image' height = '50%' width = '50%'>
+                <p>Name: {{item.name }}</p>
+                <p>Price: {{item.price}}</p>
+                <p>Description: {{item.description}}</p>
+            </div>
+
+        </div>
+
+        <div class="questions">
+            <h2>Would you buy this item?</h2>
+            <button>yes</button>
+            <button>no</button>
+        </div>
+        
+
+
+</div>
+
+
