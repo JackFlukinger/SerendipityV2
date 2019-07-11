@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ItemService, Item } from '../../s/item.service';
 
 @Component({
   selector: 'app-random',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ItemComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private ItemService:ItemService
+  ) { }
 
   ngOnInit() {
   }
