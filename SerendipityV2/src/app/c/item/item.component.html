@@ -1,6 +1,6 @@
 <h2>Please answer the following questions about this item:</h2>
-<div class="itemContainer" *ngIf="!loading">
-  <div class="itemName" [@slideInOut]>
+<div class="itemContainer" *ngIf="!loading" [@slideInOut]>
+  <div class="itemName">
     {{(ItemService.$item | async).name}}
   </div>
 

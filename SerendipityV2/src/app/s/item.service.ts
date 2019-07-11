@@ -20,7 +20,7 @@ export interface Item {
 })
 export class ItemService {
 
-  private item: BehaviorSubject<Item> =  new BehaviorSubject<Item>(null);;
+  private item: BehaviorSubject<Item> =  new BehaviorSubject<Item>({id: null, name: null, description: null, price: null, rating: null, numratings: null, image: null});
   public $item: Observable<Item> = this.item.asObservable();
 
   constructor(
@@ -53,12 +53,7 @@ export class ItemService {
     callback();
   }
 
-  public updateItem(wouldBuy: number, haveHeard: number, noRecNeeded: number, callback) {
-    if (wouldBuy > -1 && haveHeard > -1 && noRecNeeded > -1) { //user is rating current item
-
-    } else { //user is just getting new item
-
-
-    }
+  public updateItem(wouldBuy: boolean, haveHeard: boolean, noRecNeeded: boolean, callback) {
+    //this.http.post("http://localhost:8000/api/item").subscribe();
   }
 }
