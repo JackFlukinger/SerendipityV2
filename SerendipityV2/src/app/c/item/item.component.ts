@@ -41,13 +41,6 @@ export class ItemComponent implements OnInit {
     private ItemService:ItemService,
   ) { }
 
-  name: string;
-  description: string;
-  price: number;
-  rating: number;
-  numratings: number;
-  image: string;
-
 
   ngOnInit() {
     this.q1answer = null;

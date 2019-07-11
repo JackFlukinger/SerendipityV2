@@ -53,7 +53,22 @@ export class ItemService {
     callback();
   }
 
-  public updateItem(wouldBuy: boolean, haveHeard: boolean, noRecNeeded: boolean, callback) {
-    //this.http.post("http://localhost:8000/api/item").subscribe();
+  public rateItem(itemID: string, wouldBuy: boolean, haveHeard: boolean, noRecNeeded: boolean, callback) {
+    this.http.post("http://localhost:8000/api/item", {
+        "itemID": itemID,
+        "wouldBuy":  wouldBuy,
+        "haveHeard":  haveHeard,
+        "noRecNeeded":  noRecNeeded
+      }).subscribe(
+      data  => {
+        if ((data as any).result == "success") {
+          console.log("success");
+          this.getItem(callback);
+        } else {
+          console.log("Backend Error");
+        }
+    }, error  => {
+      console.log("Error", error);
+    });
   }
 }

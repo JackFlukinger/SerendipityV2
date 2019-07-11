@@ -206,7 +206,7 @@ app.get('/api/item', (req, res) => {
 
         }
       } else {
-        res.send("Backend Error");
+        res.send({result: "failure"});
       }
     });
 
@@ -221,12 +221,13 @@ app.get('/api/item', (req, res) => {
 
 app.post('/api/item', (req, res) => {
   let user = req.cookies.email;
-  console.log("trying to fetch item for user " + user);
+  console.log("trying to rate item for user " + user);
 
   if (user == undefined) {
     res.send({result: "failure"});
   } else {
 
+    let itemID = req.body.itemID;
     let wouldBuy = parseInt(req.body.wouldBuy);
     let haveHeard = parseInt(req.body.haveHeard);
     let noRecNeeded = parseInt(req.body.noRecNeeded);
@@ -240,16 +241,89 @@ app.post('/api/item', (req, res) => {
     });
 
 
-    let sql = 'SELECT (RRSitems, SRSitems) FROM users WHERE email=\''+ user + '\';';
+    let sql = 'SELECT RRSitems, SRSitems FROM users WHERE email=\''+ user + '\';';
 
-    db.all(sql, (err, rows) => {
-      if (rows) { //Process withdrawn items
+    db.get(sql, (err, row) => {
+      if (row) {
 
-        console.log(rows);
+        let firstItem = null;
+        let table = null;
 
+        if (row.RRSitems != undefined) { //User is rating random item
+          let firstItem = row.RRSitems.split(",")[0];
+        } else if (row.SRSitems != undefined) {
+          let firstItem = row.SRSitems.split(",")[0];
+        }
 
+          if (firstItem != itemID) {
+            res.send({result: 'failure'})
+          } else {
+            remaining = row.RRSitems.split(",").slice(1).join();
+            console.log("Remaining " + remaining);
+
+            let editSQL = 'UPDATE users SET RRSitems=\'' + remaining + '\' WHERE email=\'' + user + '\';';
+
+            if (remaining.length == 0) {
+              editSQL = 'UPDATE users SET RRSitems=null WHERE email=\'' + user + '\';';
+            }
+
+            db.run(editSQL, function(err) {
+              if (err) {
+                console.log(err);
+                res.send({result: "failure"});
+              } else {
+                addRatingSQL = 'INSERT INTO RRSresults(email, itemID, wouldBuy, haveHeard, noRecNeeded, timestamp)  VALUES (\'' +
+                user + '\', \'' +
+                itemID + '\', \'' +
+                wouldBuy + '\', \'' +
+                haveHeard + '\', \'' +
+                noRecNeeded + '\', \'' +
+                Date.now().toString() + '\');';
+
+                db.run(addRatingSQL, function(err) {
+                  if (err) {
+                    console.log(err);
+                    res.send({result: "failure"});
+                  } else {
+                    res.send({result: "success"});
+                  }
+                });
+              }
+            });
+
+          }
+
+          console.log("User rated " + firstItem);
+
+        } else if (row.RRSitems == undefined && row.SRSitems != undefined) { //User is rating serendipitous item
+          let firstItem = row.SRSitems.split(",")[0];
+          console.log(firstItem);
+          let querySql = 'SELECT * FROM items WHERE itemID=\'' + firstItem + '\';';
+
+          db.get(querySql, (err, row) => {
+            if (row) {
+              console.log(row);
+              res.send({result: 'success', item: row});
+            } else {
+              res.send({result: 'failure'});
+            }
+          });
+        } else if (row.RRSitems == undefined && row.SRSitems == undefined) { //Ratings have been completed
+
+          let doneSql = 'UPDATE users SET stage=\'3\' WHERE email = \'' + user + '\';';
+
+          db.run(doneSql, function(err) {
+            if (err) {
+              console.log(err);
+              res.send({result: "failure"});
+            } else {
+              res.send({result: "nextstage"});
+            }
+          });
+
+        }
       } else {
-        res.send("Backend Error");
+        res.send({result: "failure"});
       }
     });
 
