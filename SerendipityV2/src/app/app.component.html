@@ -7,6 +7,6 @@
     (noun): the faculty or phenomenon of finding valuable or agreeable things not sought for
   </h2>
 </div>
-<app-categories *ngIf="(StageService.$stage | async) == 1" [@slideInOut]></app-categories>
-<app-random *ngIf="(StageService.$stage | async) == 3" [@slideInOut]></app-random>
+<app-categories *ngIf="(StageService.$stage | async) == 3" [@slideInOut]></app-categories>
+<app-random *ngIf="(StageService.$stage | async) == 1" [@slideInOut]></app-random>
 <app-serendipitous *ngIf="(StageService.$stage | async) == 4" [@slideInOut]></app-serendipitous>

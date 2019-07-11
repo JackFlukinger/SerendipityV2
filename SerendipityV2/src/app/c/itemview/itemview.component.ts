@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Item, ItemService } from '../../s/item.service';
-import { style, state, animate, transition, trigger } from '@angular/animations';
+import { style, state, animate, transition, trigger, AnimationMetadataType } from '@angular/animations';
 
 
 @Component({
@@ -30,8 +30,15 @@ import { style, state, animate, transition, trigger } from '@angular/animations'
   ]
 })
 export class ItemviewComponent implements OnInit {
+  @Input() anItem: Item; //recieves input from selector call in random
 
   loading: boolean = true;
+  name: string;
+  description: string;
+  price: number;
+  rating: number;
+  numratings: number;
+  image: string;
 
   constructor(
     private ItemService: ItemService
@@ -41,4 +48,12 @@ export class ItemviewComponent implements OnInit {
     this.ItemService.updateItem(-1, {});
   }
 
+  setItemInfo(item: Item){
+    this.name = item.name;
+    this.description= item.description;
+    this.price = item.price;
+    this.rating = item.rating;
+    this.numratings = item.numratings;
+    this.image = item.image;
+  }
 }
