@@ -38,7 +38,7 @@ export class ItemviewComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.ItemService.updateItem(-1);
+    this.ItemService.updateItem(-1, {});
   }
 
 }

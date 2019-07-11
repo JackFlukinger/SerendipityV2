@@ -6,6 +6,11 @@ body {
   min-height: 93vh;
 }
 
+.loading {
+  opacity: .4;
+  transition: .2s;
+}
+
 .content {
   font-family: 'Roboto', sans-serif;
   margin: auto;

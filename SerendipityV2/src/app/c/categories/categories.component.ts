@@ -33,6 +33,7 @@ export class CategoriesComponent implements OnInit {
   ) { }
 
   showDropdown: boolean;
+  loading: boolean;
   selectedCategory: number;
   profileForm: FormGroup;
   serverError: boolean;
@@ -43,6 +44,7 @@ export class CategoriesComponent implements OnInit {
   ngOnInit() {
     this.showDropdown = false;
     this.selectedCategory = -1;
+    this.loading = false;
     this.likedcategories=[]
     this.serverError = false;
 
@@ -60,6 +62,7 @@ export class CategoriesComponent implements OnInit {
 
   onSubmit(){
     console.log("Form Submitted");
+    this.loading = true;
     let index = 0;
 
     let user: User = {
@@ -73,6 +76,7 @@ export class CategoriesComponent implements OnInit {
 
     //add user to backend using service
     this.UserService.newUser(user, fun => {
+      this.loading = false;
       this.serverError = true;
     });
   }

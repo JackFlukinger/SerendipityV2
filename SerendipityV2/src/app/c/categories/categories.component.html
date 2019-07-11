@@ -1,4 +1,4 @@
-<div class = "content">
+<div class = "content" [ngClass]="loading ? 'loading' : ''">
     <form [formGroup] = "profileForm" (ngSubmit) = "onSubmit()">
         <div class = "bioItems">
             <input
@@ -48,11 +48,11 @@
     </form>
 
 
-    <div *ngIf= "!this.profileForm.valid || this.likedcategories.length < 10" class="invalidInput" [@slide]>
+    <div class="invalidInput" [@slide]>
         <p *ngIf="!this.profileForm.get('age').valid && (this.profileForm.get('age').touched || this.profileForm.get('age').dirty)" [@slide]>Invalid Age</p>
         <p *ngIf="!this.profileForm.get('gender').valid && (this.profileForm.get('gender').touched || this.profileForm.get('gender').dirty)" [@slide]>Invalid Gender</p>
         <p *ngIf="!this.profileForm.get('email').valid && (this.profileForm.get('email').touched || this.profileForm.get('email').dirty)" [@slide]>Invalid Email</p>
         <p *ngIf="(this.likedcategories.length < 10 && (this.likedcategories.length > 0 || (this.profileForm.touched || this.profileForm.dirty)))" [@slide]>Please select at least 10 categories!</p>
-        <p *ngIf="this.serverError" [@slide]>Invalid input</p>
-      </div>
+        <p *ngIf="this.serverError" [@slide]>Invalid Input</p>
+    </div>
 </div>
