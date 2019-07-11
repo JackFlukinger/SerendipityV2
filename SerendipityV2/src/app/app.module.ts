@@ -8,16 +8,16 @@ import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
 import { CategoriesComponent } from './c/categories/categories.component';
 import { ItemviewComponent } from './c/itemview/itemview.component';
-import { RandomComponent } from './c/random/random.component';
-import { SerendipitousComponent } from './c/serendipitous/serendipitous.component';
+import { ItemComponent } from './c/item/item.component';
+import { CompleteComponent } from './c/complete/complete.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CategoriesComponent,
     ItemviewComponent,
-    RandomComponent,
-    SerendipitousComponent
+    ItemComponent,
+    CompleteComponent
   ],
   imports: [
     BrowserModule,
