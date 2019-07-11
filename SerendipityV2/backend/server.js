@@ -105,7 +105,7 @@ app.post('/api/users', (req, res) => {
     });
 
     //SQL to generate the random movies for the random recommender
-    let randomSQL = 'SELECT itemID FROM items ORDER BY RANDOM() LIMIT 100;';
+    let randomSQL = 'SELECT itemID FROM items ORDER BY RANDOM() LIMIT 50;';
 
     db.all(randomSQL, (err, rows) => {
       if (err) {
@@ -248,79 +248,62 @@ app.post('/api/item', (req, res) => {
 
         let firstItem = null;
         let table = null;
+        let column = null;
+        let remaining = null;
 
         if (row.RRSitems != undefined) { //User is rating random item
-          let firstItem = row.RRSitems.split(",")[0];
+          firstItem = row.RRSitems.split(",")[0];
+          table = "RRSresults";
+          column = "RRSitems";
+          remaining = row.RRSitems.split(",").slice(1).join();
         } else if (row.SRSitems != undefined) {
-          let firstItem = row.SRSitems.split(",")[0];
+          firstItem = row.SRSitems.split(",")[0];
+          table = "SRSresults";
+          column = "SRSitems";
+          remaining = row.SRSitems.split(",").slice(1).join();
+        } else {
+          console.log("Error: no items left to rate");
+          res.send({result: 'failure'});
+          return;
         }
 
-          if (firstItem != itemID) {
-            res.send({result: 'failure'})
-          } else {
-            remaining = row.RRSitems.split(",").slice(1).join();
-            console.log("Remaining " + remaining);
+        console.log("Remaining: " + remaining);
 
-            let editSQL = 'UPDATE users SET RRSitems=\'' + remaining + '\' WHERE email=\'' + user + '\';';
+        if (firstItem != itemID) {
+          res.send({result: 'failure'})
+        } else {
 
-            if (remaining.length == 0) {
-              editSQL = 'UPDATE users SET RRSitems=null WHERE email=\'' + user + '\';';
-            }
+          let editSQL = 'UPDATE users SET ' + column + '=\'' + remaining + '\' WHERE email=\'' + user + '\';';
 
-            db.run(editSQL, function(err) {
-              if (err) {
-                console.log(err);
-                res.send({result: "failure"});
-              } else {
-                addRatingSQL = 'INSERT INTO RRSresults(email, itemID, wouldBuy, haveHeard, noRecNeeded, timestamp)  VALUES (\'' +
-                user + '\', \'' +
-                itemID + '\', \'' +
-                wouldBuy + '\', \'' +
-                haveHeard + '\', \'' +
-                noRecNeeded + '\', \'' +
-                Date.now().toString() + '\');';
-
-                db.run(addRatingSQL, function(err) {
-                  if (err) {
-                    console.log(err);
-                    res.send({result: "failure"});
-                  } else {
-                    res.send({result: "success"});
-                  }
-                });
-              }
-            });
-
+          if (remaining.length == 0) {
+            editSQL = 'UPDATE users SET ' + column + '=null WHERE email=\'' + user + '\';';
           }
 
-          console.log("User rated " + firstItem);
-
-        } else if (row.RRSitems == undefined && row.SRSitems != undefined) { //User is rating serendipitous item
-          let firstItem = row.SRSitems.split(",")[0];
-          console.log(firstItem);
-          let querySql = 'SELECT * FROM items WHERE itemID=\'' + firstItem + '\';';
-
-          db.get(querySql, (err, row) => {
-            if (row) {
-              console.log(row);
-              res.send({result: 'success', item: row});
-            } else {
-              res.send({result: 'failure'});
-            }
-          });
-        } else if (row.RRSitems == undefined && row.SRSitems == undefined) { //Ratings have been completed
-
-          let doneSql = 'UPDATE users SET stage=\'3\' WHERE email = \'' + user + '\';';
-
-          db.run(doneSql, function(err) {
+          db.run(editSQL, function(err) {
             if (err) {
               console.log(err);
               res.send({result: "failure"});
             } else {
-              res.send({result: "nextstage"});
+              addRatingSQL = 'INSERT INTO ' + table + '(email, itemID, wouldBuy, haveHeard, noRecNeeded, timestamp)  VALUES (\'' +
+              user + '\', \'' +
+              itemID + '\', \'' +
+              wouldBuy + '\', \'' +
+              haveHeard + '\', \'' +
+              noRecNeeded + '\', \'' +
+              Date.now().toString() + '\');';
+
+              db.run(addRatingSQL, function(err) {
+                if (err) {
+                  console.log(err);
+                  res.send({result: "failure"});
+                } else {
+                  res.send({result: "success"});
+                }
+              });
             }
           });
 
+          console.log("User rated " + firstItem);
         }
       } else {
         res.send({result: "failure"});
