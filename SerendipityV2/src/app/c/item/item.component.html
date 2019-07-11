@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class= 'content'>
     <h2 class = 'content'>Please answer the following questions about this item.</h2>
     
@@ -22,3 +23,12 @@
 </div>
 
 
+=======
+<h2>Please answer the following questions about this item:</h2>
+<div class="itemContainer" *ngIf="!loading">
+  <div class="itemName" [@slideInOut]>
+    {{(ItemService.$item | async).name}}
+  </div>
+
+</div>
+>>>>>>> 6c1332752c761eac082b0384ef3d907c596c6204
