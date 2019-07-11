@@ -36,6 +36,8 @@ export class ItemComponent implements OnInit {
   q2answer: boolean;
   q3answer: boolean;
 
+  stars: number;
+
   responses: string[];
 
 
@@ -48,7 +50,6 @@ export class ItemComponent implements OnInit {
     this.q1answer = null;
     this.q2answer = null;
     this.q3answer = null;
-
 
     this.loading = true;
 

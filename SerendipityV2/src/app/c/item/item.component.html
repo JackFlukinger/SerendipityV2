@@ -4,6 +4,14 @@
       <p id="itemname">{{(ItemService.$item | async)?.name}}</p>
       <p id="itemprice">${{(ItemService.$item | async)?.price}}</p>
       <p id="itemdescription">{{(ItemService.$item | async)?.description}}</p>
+
+      <div class="rating">
+          <span class="fa fa-star"></span>
+      </div>
+
+      <p id="numratings">{{(ItemService.$item | async)?.numratings}}</p>
+
+
     </div>
 </div>
 <div class="questionsContainer">

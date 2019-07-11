@@ -85,10 +85,14 @@ input:focus {
   font-size: 1.5em;
 }
 
-#itemdescription{
+#itemdescription, #numratings{
   font-size: 1.2em;
 }
 
 #itemprice{
   font-size: 1.3em;
+}
+
+#itemimage{
+  padding-right: 20px;
 }
