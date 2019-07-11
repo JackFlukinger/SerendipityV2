@@ -18,8 +18,8 @@ export interface Item {
 })
 export class ItemService {
 
-  //private item: BehaviorSubject<Item> = new BehaviorSubject<Item>();
-  //public $item: Observable<Item> = this.item.asObservable();
+  private item: BehaviorSubject<Item>;
+  public $item: Observable<Item> = this.item.asObservable();
 
   constructor() { }
 
