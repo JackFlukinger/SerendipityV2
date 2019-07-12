@@ -69,7 +69,7 @@ app.get('/api/categories', (req, res) => {
     if (rows) {
       res.send({categories: rows});
     } else {
-      res.send("Backend Error");
+      res.send({result: 'failure'});
     }
   });
 
