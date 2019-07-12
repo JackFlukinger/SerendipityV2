@@ -5,17 +5,12 @@
       <p id="itemprice">${{(ItemService.$item | async)?.price}}</p>
       <p id="itemdescription">{{(ItemService.$item | async)?.description}}</p>
 
-<<<<<<< HEAD
-      <div class="rating" >
-          <span *ngFor="let num in (ItemService.$item | async)?.rating" class="fa fa-star"></span>
-=======
       <div class="rating">
           <span class="fa" [ngClass]="(ItemService.$item | async)?.rating >= .75 ? 'fa-star coloredfullstar' : 'fa-star'"></span>
           <span class="fa" [ngClass]="(ItemService.$item | async)?.rating >= 1.75 ? 'fa-star coloredfullstar' : ((ItemService.$item | async)?.rating >= 1.25 && (ItemService.$item | async)?.rating <= 1.75? 'fa-star-half' : 'fa-star')"></span>
           <span class="fa" [ngClass]="(ItemService.$item | async)?.rating >= 2.75 ? 'fa-star coloredfullstar' : ((ItemService.$item | async)?.rating >= 2.25 && (ItemService.$item | async)?.rating <= 2.75? 'fa-star-half' : 'fa-star')"></span>
           <span class="fa" [ngClass]="(ItemService.$item | async)?.rating >= 3.75 ? 'fa-star coloredfullstar' : ((ItemService.$item | async)?.rating >= 3.25 && (ItemService.$item | async)?.rating <= 3.75? 'fa-star-half' : 'fa-star')"></span>
           <span class="fa" [ngClass]="(ItemService.$item | async)?.rating >= 4.75 ? 'fa-star coloredfullstar' : ((ItemService.$item | async)?.rating >= 4.25 && (ItemService.$item | async)?.rating <= 4.75? 'fa-star-half' : 'fa-star')"></span>
->>>>>>> 0341b9a521f1818dfdc55632291b21e39df7a786
       </div>
       <p id="numratings">{{(ItemService.$item | async)?.rating}}</p>
       <p id="numratings">{{(ItemService.$item | async)?.numratings}}</p>
