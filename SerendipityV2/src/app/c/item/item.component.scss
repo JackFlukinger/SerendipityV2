@@ -134,6 +134,19 @@ input:focus {
   width: 100%;
   text-align: center;
   margin-top:auto;
-  color: #ffb01f;
+  text-shadow: 0px 0px 3px black;
+  color: white;
+}
 
+.coloredfullstar {
+  color: #ffb01f;
+}
+
+.fa-star-half {
+  font-size: 2em;
+  transition: .2s;
+  width: 100%;
+  text-align: center;
+  margin-top:auto;
+  color: #ffb01f;
 }
