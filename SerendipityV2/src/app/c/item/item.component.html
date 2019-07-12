@@ -15,22 +15,22 @@
     </div>
 </div>
 <div class="questionsContainer">
-  
+
   <div class="questions">
       <h2>I would buy this item.</h2>
       <div class="choices">
-        <input 
+        <input
         type='button'
         class="y"
         value='yes'
-        [ngClass]="(q1answer!=null && q1answer) ? 'selected-y':''" 
+        [ngClass]="(q1answer!=null && q1answer) ? 'selected-y':''"
         (click)="q1answer==null || q1answer!=true ? q1answer=true : q1answer=null">
 
-        <input 
+        <input
         type='button'
         class="n"
         value='no'
-        [ngClass]="(q1answer!=null && !q1answer) ? 'selected-n':''" 
+        [ngClass]="(q1answer!=null && !q1answer) ? 'selected-n':''"
         (click)="q1answer==null || q1answer!=false ? q1answer=false : q1answer=null">
       </div>
   </div>
@@ -38,18 +38,18 @@
   <div class="questions" *ngIf="this.q1answer != null">
       <h2>I have heard of this product already.</h2>
       <div class="choices">
-        <input 
+        <input
         type='button'
         class="y"
         value='yes'
-        [ngClass]="(q2answer!=null && q2answer) ? 'selected-y':''" 
+        [ngClass]="(q2answer!=null && q2answer) ? 'selected-y':''"
         (click)="q2answer==null || q2answer!=true ? q2answer=true : q2answer=null">
-        
-        <input 
+
+        <input
         type='button'
         class="n"
         value='no'
-        [ngClass]="(q2answer!=null && !q2answer) ? 'selected-n':''" 
+        [ngClass]="(q2answer!=null && !q2answer) ? 'selected-n':''"
         (click)="q2answer==null || q2answer!=false ? q2answer=false : q2answer=null">
       </div>
   </div>
@@ -57,21 +57,21 @@
   <div class="questions" *ngIf="this.q2answer != null">
       <h2>I would have purchased this product without a recommendation</h2>
       <div class="choices">
-          <input 
+          <input
           type='button'
           class="y"
           value='yes'
-          [ngClass]="(q3answer!=null && q3answer) ? 'selected-y':''" 
+          [ngClass]="(q3answer!=null && q3answer) ? 'selected-y':''"
           (click)="q3answer==null || q3answer!=true ? q3answer=true : q3answer=null">
-          
-          <input 
+
+          <input
           type='button'
           class="n"
           value='no'
-          [ngClass]="(q3answer!=null && !q3answer) ? 'selected-n':''" 
+          [ngClass]="(q3answer!=null && !q3answer) ? 'selected-n':''"
           (click)="q3answer==null || q3answer!=false ? q3answer=false : q3answer=null">
         </div>
-  
+
   </div>
   <input class="nxtBtn" *ngIf="q3answer!=null" type="submit" value="next>" (click)="submitRating()" [@fade]>
   </div>
