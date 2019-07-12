@@ -1,9 +1,9 @@
 .itemview {
   padding-left: 10%;
   padding-right: 10%;
-  text-align: center;
   display: flex;
   flex-flow: wrap;
+  justify-content: center;
   margin-bottom: 20%;
 }
 
@@ -11,7 +11,8 @@ img {
   display: inline-block;
   max-width:100%;
   max-height:100%;
-  margin: auto;
+  margin-top: 2em;
+  margin-bottom: auto;
 }
 
 input{
@@ -22,7 +23,7 @@ input{
     color: white;
     font-size: 1.5em;
     background-color: #333333;
-    transition: .2s;
+    transition: .3s;
     text-align: center;
 
     &:hover {
@@ -34,7 +35,9 @@ input{
 
 input[type=submit] {
     height:100%;
-    width: 100%;
+    width: auto;
+    padding: 2em;
+    margin-left: auto;
 
     &:hover {
       box-shadow: 0px 0px 1px black inset;
@@ -69,62 +72,97 @@ input:focus {
   left: 0;
   width: 100%;
   height: 20%;
-  display: grid;
-  grid-template-columns: 25% 25% 25% 25%;
+  display: flex;
   background-color: #333333;
   color: white;
   box-shadow: 0px 0px 2px black;
+  overflow-x: auto;
 }
 
 .choices {
   position: absolute;
   bottom: 0;
-  width: 100%;
-  left: 0;
+  left: 3em;
+  right: 0;
 }
 
-.questions{
-  text-align: center;
+.questions {
   position: relative;
-  padding: 10px;
+  width: 2em;
+  min-width: 2em;
+  text-align: center;
+  padding: .5em;
   border-right: 1px solid #00000030;
   border-top: 1px solid #00000030;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: .3s linear;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.selectedQuestion {
+  width: 100%;
+}
+
+.questionInfo {
+  font-size: 1.2em;
+  padding-left: 3em;
+}
+
+.questionNum {
+  position: absolute;
+  font-size: .7em;
+  top: 0;
+  left: 1em;
 }
 
 .iteminfo{
   font-family: 'Roboto', sans-serif;
-  box-shadow: 0px 0px 2px solid black;
+  width: auto;
+  max-width: 75%;
+  min-width: 600px;
 }
 
 #itemname{
-  font-size: 1.5em;
+  font-size: 2em;
+  margin-bottom: 0.2em;
 }
 
 #itemdescription {
   text-align: left;
-  overflow-y: scroll;
-  font-size: 1.2em;
+  overflow-y: auto;
+  font-size: 1em;
 }
 
 #numratings {
-  font-size: 1.2em;
+  font-size: 1em;
+  text-shadow: none;
+  font-weight: bold;
+  padding-left: .5em;
+  align-self: center;
 }
 
 #itemprice{
-  font-size: 1.3em;
+  font-size: 1.5em;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.5em;
 }
 
 #itemimage{
   padding-right: 20px;
+  max-width: 23%;
 }
 
 .rating {
-  margin-top: auto;
-  margin-bottom: auto;
-  margin-left: auto;
+  margin-top: 0;
+  margin-bottom: .5em;
   text-shadow: 0px 0px 2px black;
   display: inline-grid;
-  grid-template-columns: 2.3em 2.3em 2.3em 2.3em 2.3em;
+  grid-template-columns: 2.3em 2.3em 2.3em 2.3em 2.3em auto;
   grid-template-rows: 2.3em;
 }
 

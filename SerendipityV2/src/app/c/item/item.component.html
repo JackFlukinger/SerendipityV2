@@ -1,81 +1,92 @@
-<div class="itemview" *ngIf="!loading" [@slideInOut]>
+<div class="itemview" *ngIf="!loading" [@fade]>
     <img id="itemimage" src='{{(ItemService.$item | async)?.image}}' alt = '{{(ItemService.$item | async)?.name}} image'>
     <div class = "iteminfo">
-      <p id="itemname">{{(ItemService.$item | async)?.name}}</p>
-      <p id="itemprice">${{(ItemService.$item | async)?.price}}</p>
-      <p id="itemdescription">{{(ItemService.$item | async)?.description}}</p>
-
+      <p id="itemname" [innerHtml]="(ItemService.$item | async)?.name"></p>
       <div class="rating">
           <span class="fa" [ngClass]="(ItemService.$item | async)?.rating >= .75 ? 'fa-star coloredfullstar' : 'fa-star'"></span>
           <span class="fa" [ngClass]="(ItemService.$item | async)?.rating >= 1.75 ? 'fa-star coloredfullstar' : ((ItemService.$item | async)?.rating >= 1.25 && (ItemService.$item | async)?.rating <= 1.75? 'fa-star-half' : 'fa-star')"></span>
           <span class="fa" [ngClass]="(ItemService.$item | async)?.rating >= 2.75 ? 'fa-star coloredfullstar' : ((ItemService.$item | async)?.rating >= 2.25 && (ItemService.$item | async)?.rating <= 2.75? 'fa-star-half' : 'fa-star')"></span>
           <span class="fa" [ngClass]="(ItemService.$item | async)?.rating >= 3.75 ? 'fa-star coloredfullstar' : ((ItemService.$item | async)?.rating >= 3.25 && (ItemService.$item | async)?.rating <= 3.75? 'fa-star-half' : 'fa-star')"></span>
           <span class="fa" [ngClass]="(ItemService.$item | async)?.rating >= 4.75 ? 'fa-star coloredfullstar' : ((ItemService.$item | async)?.rating >= 4.25 && (ItemService.$item | async)?.rating <= 4.75? 'fa-star-half' : 'fa-star')"></span>
+          <p id="numratings">({{(ItemService.$item | async)?.numratings}} Ratings)</p>
       </div>
-      <p id="numratings">{{(ItemService.$item | async)?.rating}}</p>
-      <p id="numratings">{{(ItemService.$item | async)?.numratings}}</p>
+      <p id="itemprice">{{(ItemService.$item | async)?.price}}</p>
 
-
+      <p id="itemdescription" [innerHtml]="(ItemService.$item | async)?.description"></p>
     </div>
 </div>
 <div class="questionsContainer">
 
-  <div class="questions">
+  <div class="questions" [ngClass]="openq==1 ? 'selectedQuestion' : ''" (click)="openq=1">
+    <div class="questionNum">
+      <h2>Q1</h2>
+    </div>
+    <div class="questionInfo">
       <h2>I would buy this item.</h2>
       <div class="choices">
-        <input
-        type='button'
-        class="y"
-        value='yes'
-        [ngClass]="(q1answer!=null && q1answer) ? 'selected-y':''"
-        (click)="q1answer==null || q1answer!=true ? q1answer=true : q1answer=null">
-
         <input
         type='button'
         class="n"
         value='no'
         [ngClass]="(q1answer!=null && !q1answer) ? 'selected-n':''"
-        (click)="q1answer==null || q1answer!=false ? q1answer=false : q1answer=null">
-      </div>
-  </div>
+        (click)="q1answer=false; openq=getUnanswered(); $event.stopPropagation()">
 
-  <div class="questions" *ngIf="this.q1answer != null">
-      <h2>I have heard of this product already.</h2>
-      <div class="choices">
         <input
         type='button'
         class="y"
         value='yes'
-        [ngClass]="(q2answer!=null && q2answer) ? 'selected-y':''"
-        (click)="q2answer==null || q2answer!=true ? q2answer=true : q2answer=null">
+        [ngClass]="(q1answer!=null && q1answer) ? 'selected-y':''"
+        (click)="q1answer=true; openq=getUnanswered(); $event.stopPropagation()">
+      </div>
+    </div>
+  </div>
 
+  <div class="questions" [ngClass]="openq==2 ? 'selectedQuestion' : ''"  (click)="openq=2">
+    <div class="questionNum">
+      <h2>Q2</h2>
+    </div>
+    <div class="questionInfo">
+      <h2>I have heard of this product already.</h2>
+      <div class="choices">
         <input
         type='button'
         class="n"
         value='no'
         [ngClass]="(q2answer!=null && !q2answer) ? 'selected-n':''"
-        (click)="q2answer==null || q2answer!=false ? q2answer=false : q2answer=null">
+        (click)="q2answer=false; openq=getUnanswered(); $event.stopPropagation()">
+
+        <input
+        type='button'
+        class="y"
+        value='yes'
+        [ngClass]="(q2answer!=null && q2answer) ? 'selected-y':''"
+        (click)="q2answer=true; openq=getUnanswered(); $event.stopPropagation()">
       </div>
+    </div>
   </div>
 
-  <div class="questions" *ngIf="this.q2answer != null">
+  <div class="questions" [ngClass]="openq==3 ? 'selectedQuestion' : ''"  (click)="openq=3">
+    <div class="questionNum">
+      <h2>Q3</h2>
+    </div>
+    <div class="questionInfo">
       <h2>I would have purchased this product without a recommendation</h2>
       <div class="choices">
-          <input
-          type='button'
-          class="y"
-          value='yes'
-          [ngClass]="(q3answer!=null && q3answer) ? 'selected-y':''"
-          (click)="q3answer==null || q3answer!=true ? q3answer=true : q3answer=null">
-
           <input
           type='button'
           class="n"
           value='no'
           [ngClass]="(q3answer!=null && !q3answer) ? 'selected-n':''"
-          (click)="q3answer==null || q3answer!=false ? q3answer=false : q3answer=null">
-        </div>
+          (click)="q3answer=false; openq=getUnanswered(); $event.stopPropagation()">
 
+          <input
+          type='button'
+          class="y"
+          value='yes'
+          [ngClass]="(q3answer!=null && q3answer) ? 'selected-y':''"
+          (click)="q3answer=true; openq=getUnanswered(); $event.stopPropagation()">
+        </div>
+      </div>
   </div>
-  <input class="nxtBtn" *ngIf="q3answer!=null" type="submit" value="next>" (click)="submitRating()" [@fade]>
+  <input class="nxtBtn" *ngIf="q1answer!=null && q2answer!=null && q3answer!=null" type="submit" value="next>" (click)="submitRating()" [@expand]>
   </div>

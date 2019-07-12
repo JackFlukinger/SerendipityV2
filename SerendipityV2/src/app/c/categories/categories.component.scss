@@ -22,10 +22,13 @@ label, .formField{
   overflow-y: hidden;
   margin-bottom: 5px;
   padding: 15px 15px 0px 15px;
+  transition: .1s;
 
   &:hover {
     cursor: pointer;
-    box-shadow: 0px 0px 3px black inset;
+    box-shadow: 0px 0px 2px black inset;
+    background-color: #333333;
+    color: white;
   }
 }
 
@@ -36,9 +39,9 @@ label, .formField{
   padding-bottom: 15px;
   background: transparent;
   width: 100%;
-  transition: .2s;
   text-align: center;
   border: none;
+  color: inherit;
 
   &:hover {
     cursor: pointer;
@@ -53,19 +56,25 @@ label, .formField{
   border: none;
   background: none;
   padding: 10px;
+  color: white;
+  text-shadow: 0px 0px 2px black;
+  transition-property: background-color;
+  transition-duration: .2s;
 
   &:hover {
-    box-shadow: 0px 0px 2px black inset;
+    background-color: #386f38;
+    font-weight: bold;
     cursor: pointer;
   }
 }
 
 .droppedCat {
-  box-shadow: 0px 0px 3px black inset;
+  background-color: #333333;
+  color: white;
 }
 
 .selected {
-  background-color: lightgreen;
+  background-color: #386f38;
 }
 
 
@@ -76,13 +85,20 @@ form{
 input {
   font-family: 'Roboto', sans-serif;
   border: 0px;
-  border-bottom: 1px solid black;
+  border-bottom: 1em solid #333333;
   font-size: 1.3em;
 }
 
 input[type=text], input[type=number], input[type=email] {
   width: 33%;
-  margin-top: 20px;
+  padding-top: 20px;
+  background-color: #333333;
+  color: white;
+  z-index: 10;
+}
+
+::placeholder {
+  color: lightgrey;
 }
 
 input:focus {
@@ -121,7 +137,7 @@ input[type=submit] {
   width: 33%;
   position: absolute;
   left: 33%;
-  background: black;
+  background: #333333;
   color: white;
   text-align: left;
   padding-left: 10px;
@@ -144,6 +160,9 @@ input[type=submit] {
 .bioItems{
   position: relative;
   padding: 0px 20px;
+  background-color: #333333;
+  box-shadow: 0px 0px 2px black inset;
+
 }
 
 
@@ -154,10 +173,12 @@ input[type=submit] {
   font-family: 'Roboto', sans-serif;
   list-style: none;
   padding-left:10px;
+  padding-right: 10px;
   background: #a94442; /* red */
   color: white;
   width: 20%;
   margin-top: 1em;
+  box-shadow: 0px 0px 2px black;
 }
 
 p {

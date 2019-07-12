@@ -9,7 +9,7 @@ export interface Item {
   id: string,
   name: string,
   description: string,
-  price: number,
+  price: string,
   rating: number,
   numratings: number,
   image: string
@@ -35,9 +35,14 @@ export class ItemService {
           let id = (data as any).item.itemID;
           let name = (data as any).item.name;
           let description = (data as any).item.description;
-          let price = parseFloat((data as any).item.price);
+          if (description == 'None') {description = '';}
+          let price = (data as any).item.price;
+          if (!(parseFloat(price) >= 0)) {price = 'No Price Listed';}
+          else {price = '$' + price.toFixed(2);}
           let rating = parseFloat((data as any).item.rating);
+          if (!(rating >= 0)) {rating = 0;}
           let numratings = parseInt((data as any).item.numratings);
+          if (!(numratings>=0)) {numratings = 0;}
           let image = (data as any).item.image;
           let newItem:Item = {id: id, name: name, description: description, price: price, rating: rating, numratings: numratings, image: image};
           this.item.next(newItem);
