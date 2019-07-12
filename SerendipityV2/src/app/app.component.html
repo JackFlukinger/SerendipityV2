@@ -1,11 +1,8 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center" (mouseenter)="showDefinition=true" (mouseleave)="showDefinition=false">
-  <h1 [ngClass]="showDefinition ? 'transparent' : 'opaque'">
-    serendipity
+  <h1>
+    product interest survey
   </h1>
-  <h2 class="definition" *ngIf="showDefinition" [@fade]>
-    (noun): the faculty or phenomenon of finding valuable or agreeable things not sought for
-  </h2>
 </div>
 <app-categories *ngIf="(StageService.$stage | async) == 1" [@slideInOut]></app-categories>
 <app-item *ngIf="(StageService.$stage | async) == 2" [@fade]></app-item>
