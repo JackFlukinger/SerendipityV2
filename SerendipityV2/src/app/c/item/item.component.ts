@@ -65,6 +65,14 @@ export class ItemComponent implements OnInit {
 
     this.ItemService.rateItem(wouldBuy, haveHeard, noRecNeeded, func => {});
     console.log([wouldBuy, haveHeard, noRecNeeded]);
+
+    this.resetResponses();
+  }
+
+  resetResponses(){
+    this.q1answer = null;
+    this.q2answer = null;
+    this.q3answer = null;
   }
 
 }
