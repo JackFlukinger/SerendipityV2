@@ -4,6 +4,8 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const sqlite3 = require('sqlite3').verbose();
 
+const recsEach = 10;
+
 const app = express();
 
 const dbPath = '../../../serendipityDatabase.db';
@@ -105,24 +107,37 @@ app.post('/api/users', (req, res) => {
     });
 
     //SQL to generate the random movies for the random recommender
-    let randomSQL = 'SELECT itemID FROM items ORDER BY RANDOM() LIMIT 50;';
+    let randomSQL = 'SELECT itemID,categories FROM items ORDER BY RANDOM() LIMIT ' + (recsEach * 2) + ';';
 
     db.all(randomSQL, (err, rows) => {
       if (err) {
         throw err;
       }
       let randomMovies = [];
+      let almostRandomMovies = [];
+      let count = 0;
       rows.forEach((row) => {
-        randomMovies.push(row.itemID);
+        count = count + 1;
+        if (count > recsEach) { //If almost random movie (needs liked categories removed)
+          cats = row.categories.replace("[","").replace("]","").split(", ").map(parseInt);
+          overlap = categories.filter(value => cats.includes(value));
+          //console.log(cats,categories,overlap);
+          if (overlap.length == 0) {
+            almostRandomMovies.push(row.itemID);
+          }
+        } else { //If just random movie
+          randomMovies.push(row.itemID);
+        }
       });
 
-      let sql = 'INSERT INTO users(email, gender, age, stage, interestedCategories, RRSitems) VALUES (\'' +
+      let sql = 'INSERT INTO users(email, gender, age, stage, interestedCategories, RRSitems, ARRSitems) VALUES (\'' +
       email + '\', \'' +
       gender + '\', \'' +
       age + '\', \'' +
       '2' + '\', \'' +
       categories + '\', \'' +
-      randomMovies + '\');';
+      randomMovies + '\', \'' +
+      almostRandomMovies + '\');';
 
       db.run(sql, function(err) {
         if (err) {
@@ -159,7 +174,7 @@ app.get('/api/item', (req, res) => {
       console.log('Connected to the SQlite database.');
     });
 
-    let sql = 'SELECT RRSitems, SRSitems FROM users WHERE email=\''+ user + '\';';
+    let sql = 'SELECT RRSitems, ARRSitems, SRSitems FROM users WHERE email=\''+ user + '\';';
 
     db.get(sql, (err, row) => {
       if (row) {
@@ -178,7 +193,20 @@ app.get('/api/item', (req, res) => {
             }
           });
 
-        } else if (row.RRSitems == undefined && row.SRSitems != undefined) {
+        } else if (row.RRSitems == undefined && row.ARRSitems != undefined) {
+          let firstItem = row.ARRSitems.split(",")[0];
+          console.log(firstItem);
+          let querySql = 'SELECT * FROM items WHERE itemID=\'' + firstItem + '\';';
+
+          db.get(querySql, (err, row) => {
+            if (row) {
+              console.log(row);
+              res.send({result: 'success', item: row});
+            } else {
+              res.send({result: 'failure'});
+            }
+          });
+        } else if (row.RRSitems == undefined && row.ARRSitems == undefined && row.SRSitems != undefined) {
           let firstItem = row.SRSitems.split(",")[0];
           console.log(firstItem);
           let querySql = 'SELECT * FROM items WHERE itemID=\'' + firstItem + '\';';
@@ -191,7 +219,7 @@ app.get('/api/item', (req, res) => {
               res.send({result: 'failure'});
             }
           });
-        } else if (row.RRSitems == undefined && row.SRSitems == undefined) { //Ratings have been completed
+        } else if (row.RRSitems == undefined && row.ARRSitems == undefined && row.SRSitems == undefined) { //Ratings have been completed
 
           let stageSQL = 'SELECT stage FROM users WHERE email = \'' + user + '\';'; //Get current stage
 
@@ -253,7 +281,7 @@ app.post('/api/item', (req, res) => {
     });
 
 
-    let sql = 'SELECT RRSitems, SRSitems FROM users WHERE email=\''+ user + '\';';
+    let sql = 'SELECT RRSitems, ARRSitems, SRSitems FROM users WHERE email=\''+ user + '\';';
 
     db.get(sql, (err, row) => {
       if (row) {
@@ -268,6 +296,11 @@ app.post('/api/item', (req, res) => {
           table = "RRSresults";
           column = "RRSitems";
           remaining = row.RRSitems.split(",").slice(1).join();
+        } else if (row.ARRSitems != undefined) {
+          firstItem = row.ARRSitems.split(",")[0];
+          table = "ARRSresults";
+          column = "ARRSitems";
+          remaining = row.ARRSitems.split(",").slice(1).join();
         } else if (row.SRSitems != undefined) {
           firstItem = row.SRSitems.split(",")[0];
           table = "SRSresults";
