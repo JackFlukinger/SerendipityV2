@@ -9,13 +9,15 @@ import { AppComponent } from './app.component';
 import { CategoriesComponent } from './c/categories/categories.component';
 import { ItemComponent } from './c/item/item.component';
 import { CompleteComponent } from './c/complete/complete.component';
+import { WaitComponent } from './c/wait/wait.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CategoriesComponent,
     ItemComponent,
-    CompleteComponent
+    CompleteComponent,
+    WaitComponent
   ],
   imports: [
     BrowserModule,

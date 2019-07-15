@@ -6,7 +6,5 @@ Create new user
   Validate, put in database
   Generate random items
 
-Handle random item rating
-  Validate, put in Database
-  Remove item from random item listen
-  Add item to random ratings table
+Handle item rating
+  If no rating given, just return
