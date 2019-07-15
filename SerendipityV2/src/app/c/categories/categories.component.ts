@@ -40,14 +40,17 @@ export class CategoriesComponent implements OnInit {
 
   likedcategories: number[];
 
+  consent: boolean;
+
 
   ngOnInit() {
+    this.consent = false;
     this.showDropdown = false;
     this.selectedCategory = -1;
     this.loading = false;
     this.likedcategories=[]
     this.serverError = false;
-
+        
     this.profileForm = this.fb.group({
       age: ['', [Validators.required, Validators.min(0), Validators.max(110)]],
       gender: ['', [Validators.required, Validators.pattern("Male|Female|Other")]],
@@ -97,5 +100,9 @@ export class CategoriesComponent implements OnInit {
     }
     console.log("Has been clicked" + index);
     console.log(this.likedcategories);
+  }
+
+  acceptConsent(){
+    this.consent=true;
   }
 }

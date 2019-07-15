@@ -188,3 +188,33 @@ p {
   padding-top: .5em;
   padding-bottom: .5em;
 }
+
+
+.overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  z-index: 100;
+  opacity: 0.9;
+  background-color: white;
+  padding-left:100px;
+  padding-right:100px;
+  text-align: center;
+}
+
+.consentbtn{
+  font-size: 1.2em;
+  border: none;
+  background-color: black;
+  width: 10%;
+  min-width: 50px;
+  color: lightgrey;
+
+  &:hover{
+    font-weight: bolder;
+    cursor: pointer;
+    }
+}

@@ -1,3 +1,12 @@
+<div *ngIf="consent==false" class = "overlay content" (click)=acceptConsent()>
+  <h2>Welcome to the Product Interest Survey!</h2>
+  <h2>Please read the following carefully and provide your consent if you wish to continue this survey.</h2>
+  
+  <p>I consent to doing this survey:</p>
+  <input class="consentbtn" type="button" value="GO">
+</div>
+
+
 <div class = "content" [ngClass]="loading ? 'loading' : ''">
     <form [formGroup] = "profileForm" (ngSubmit) = "onSubmit()">
         <div class = "bioItems">
