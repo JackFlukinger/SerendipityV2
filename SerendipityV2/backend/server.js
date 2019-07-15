@@ -181,13 +181,14 @@ app.get('/api/item', (req, res) => {
 
         if (row.RRSitems != undefined) {
           let firstItem = row.RRSitems.split(",")[0];
+          let remaining = row.RRSitems.split(",").length + row.ARRSitems.split(",").length - 1;
           console.log(firstItem);
           let querySql = 'SELECT * FROM items WHERE itemID=\'' + firstItem + '\';';
 
           db.get(querySql, (err, row) => {
             if (row) {
               console.log(row);
-              res.send({result: 'success', item: row});
+              res.send({result: 'success', item: row, left: remaining});
             } else {
               res.send({result: 'failure'});
             }
@@ -195,26 +196,30 @@ app.get('/api/item', (req, res) => {
 
         } else if (row.RRSitems == undefined && row.ARRSitems != undefined) {
           let firstItem = row.ARRSitems.split(",")[0];
+          let remaining = row.ARRSitems.split(",").length - 1;
+
           console.log(firstItem);
           let querySql = 'SELECT * FROM items WHERE itemID=\'' + firstItem + '\';';
 
           db.get(querySql, (err, row) => {
             if (row) {
               console.log(row);
-              res.send({result: 'success', item: row});
+              res.send({result: 'success', item: row, left: remaining});
             } else {
               res.send({result: 'failure'});
             }
           });
         } else if (row.RRSitems == undefined && row.ARRSitems == undefined && row.SRSitems != undefined) {
           let firstItem = row.SRSitems.split(",")[0];
+          let remaining = row.SRSitems.split(",").length - 1;
+
           console.log(firstItem);
           let querySql = 'SELECT * FROM items WHERE itemID=\'' + firstItem + '\';';
 
           db.get(querySql, (err, row) => {
             if (row) {
               console.log(row);
-              res.send({result: 'success', item: row});
+              res.send({result: 'success', item: row, left: remaining});
             } else {
               res.send({result: 'failure'});
             }

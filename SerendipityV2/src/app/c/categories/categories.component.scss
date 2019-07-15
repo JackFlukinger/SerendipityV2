@@ -191,30 +191,30 @@ p {
 
 
 .overlay{
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 100%;
   z-index: 100;
-  opacity: 0.9;
+  opacity: 1;
   background-color: white;
-  padding-left:100px;
-  padding-right:100px;
   text-align: center;
 }
 
 .consentbtn{
   font-size: 1.2em;
   border: none;
-  background-color: black;
-  width: 10%;
+  background-color: #333333;
+  width: 10em;
+  height: 3em;
   min-width: 50px;
-  color: lightgrey;
+  color: white;
+  transition: .2s;
 
   &:hover{
     font-weight: bolder;
     cursor: pointer;
+    box-shadow: 0px 0px 2px black;
     }
 }

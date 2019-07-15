@@ -10,6 +10,16 @@ import { User, UserService } from '../../s/user.service';
   styleUrls: ['./categories.component.scss'],
   providers: [ ],
   animations: [
+  trigger('fade', [
+    transition(':enter', [   // :enter is alias to 'void => *'
+      style({opacity: 0}),
+      animate('0.2s 0.2s ease-in', style({opacity: 1}))
+    ]),
+    transition(':leave', [   // :enter is alias to 'void => *'
+      style({opacity:1}),
+      animate('0.2s ease-in', style({opacity:0}))
+    ])
+  ]),
   trigger('slide', [
     transition(':enter', [   // :enter is alias to 'void => *'
       style({height:0}),
@@ -50,7 +60,7 @@ export class CategoriesComponent implements OnInit {
     this.loading = false;
     this.likedcategories=[]
     this.serverError = false;
-        
+
     this.profileForm = this.fb.group({
       age: ['', [Validators.required, Validators.min(0), Validators.max(110)]],
       gender: ['', [Validators.required, Validators.pattern("Male|Female|Other")]],

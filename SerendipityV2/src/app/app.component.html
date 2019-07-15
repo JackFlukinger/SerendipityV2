@@ -1,9 +1,4 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center" (mouseenter)="showDefinition=true" (mouseleave)="showDefinition=false">
-  <h1>
-    product interest survey
-  </h1>
-</div>
 <app-categories *ngIf="(StageService.$stage | async) == 1" [@slideInOut]></app-categories>
 <app-item *ngIf="(StageService.$stage | async) == 2" [@fade]></app-item>
 <app-wait *ngIf="(StageService.$stage | async) == 3" [@slideInOut]></app-wait>

@@ -1,13 +1,16 @@
-<div *ngIf="consent==false" class = "overlay content" (click)=acceptConsent()>
+<div *ngIf="consent==false" class = "overlay content" [@fade]>
+  <h1>welcome</h1>
   <h2>Welcome to the Product Interest Survey!</h2>
-  <h2>Please read the following carefully and provide your consent if you wish to continue this survey.</h2>
-  
-  <p>I consent to doing this survey:</p>
-  <input class="consentbtn" type="button" value="GO">
+  <h2>Please read the following carefully and provide your consent if you wish to continue this survey:</h2>
+
+  <h2>I consent to this survey:</h2>
+  <input class="consentbtn" type="button" value="GO" (click)=acceptConsent()>
 </div>
 
 
 <div class = "content" [ngClass]="loading ? 'loading' : ''">
+    <h1>step 1</h1>
+    <h2 class="topmessage">Please fill out the following information:</h2>
     <form [formGroup] = "profileForm" (ngSubmit) = "onSubmit()">
         <div class = "bioItems">
             <input
@@ -42,7 +45,7 @@
          </div>
 
          <div class = "categories">
-            <h2 class = "formField"> Please select <i>at least 10</i> of your normally purchased categories.</h2>
+            <h2 class = "topmessage"> Please select your normally purchased categories:</h2>
             <div class="catContainer" *ngFor="let category of categories;" [ngClass]="selectedCategory == category.id ? 'droppedCat' : ''" (click)="toggleBigCat(category.id)">
               <input type="button" class="catBtn" id="{{ category.id }}" value ="{{ category.name }}">
               <div class="subCatContainer" *ngIf="selectedCategory == category.id" [@slide]>

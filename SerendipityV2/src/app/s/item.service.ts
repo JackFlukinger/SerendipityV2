@@ -12,7 +12,8 @@ export interface Item {
   price: string,
   rating: number,
   numratings: number,
-  image: string
+  image: string,
+  left: number
 }
 
 @Injectable({
@@ -20,7 +21,7 @@ export interface Item {
 })
 export class ItemService {
 
-  private item: BehaviorSubject<Item> =  new BehaviorSubject<Item>({id: null, name: null, description: null, price: null, rating: null, numratings: null, image: null});
+  private item: BehaviorSubject<Item> =  new BehaviorSubject<Item>({id: null, name: null, description: null, price: null, rating: null, numratings: null, image: null, left: null});
   public $item: Observable<Item> = this.item.asObservable();
 
   constructor(
@@ -44,7 +45,8 @@ export class ItemService {
           let numratings = parseInt((data as any).item.numratings);
           if (!(numratings>=0)) {numratings = 0;}
           let image = (data as any).item.image;
-          let newItem:Item = {id: id, name: name, description: description, price: price, rating: rating, numratings: numratings, image: image};
+          let left = parseInt((data as any).left);
+          let newItem:Item = {id: id, name: name, description: description, price: price, rating: rating, numratings: numratings, image: image, left: left};
           this.item.next(newItem);
           console.log(newItem);
         } else if ((data as any).result == 'nextstage') { //If user has completed all ratings
