@@ -193,14 +193,26 @@ app.get('/api/item', (req, res) => {
           });
         } else if (row.RRSitems == undefined && row.SRSitems == undefined) { //Ratings have been completed
 
-          let doneSql = 'UPDATE users SET stage=\'3\' WHERE email = \'' + user + '\';';
+          let stageSQL = 'SELECT stage FROM users WHERE email = \'' + user + '\';'; //Get current stage
 
-          db.run(doneSql, function(err) {
-            if (err) {
-              console.log(err);
-              res.send({result: "failure"});
+          db.get(stageSQL, (err, row) => {
+            if (row) {
+              console.log(row.stage);
+              nextStage = parseInt(row.stage) + 1;
+
+              let doneSql = 'UPDATE users SET stage=\'' + nextStage + '\' WHERE email = \'' + user + '\';';
+
+              db.run(doneSql, function(err) {
+                if (err) {
+                  console.log(err);
+                  res.send({result: "failure"});
+                } else {
+                  res.send({result: "nextstage"});
+                }
+              });
+
             } else {
-              res.send({result: "nextstage"});
+              res.send({result: "failure"});
             }
           });
 

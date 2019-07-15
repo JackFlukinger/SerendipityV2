@@ -6,4 +6,6 @@
 </div>
 <app-categories *ngIf="(StageService.$stage | async) == 1" [@slideInOut]></app-categories>
 <app-item *ngIf="(StageService.$stage | async) == 2" [@fade]></app-item>
-<app-complete *ngIf="(StageService.$stage | async) == 3" [@slideInOut]></app-complete>
+<app-wait *ngIf="(StageService.$stage | async) == 3" [@slideInOut]></app-wait>
+<app-item *ngIf="(StageService.$stage | async) == 4" [@fade]></app-item>
+<app-complete *ngIf="(StageService.$stage | async) == 5" [@fade]></app-complete>
