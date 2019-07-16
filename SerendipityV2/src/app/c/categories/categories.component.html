@@ -1,4 +1,5 @@
 <div *ngIf="consent==false" class = "overlay content" [@fade]>
+
   <h1>welcome</h1>
   <h2>Welcome to the Product Interest Survey!</h2>
   <div class="bioItems" [@slide]>
@@ -9,8 +10,31 @@
     placeholder="Email"
     autocomplete="none" *ngIf="beenhere">
   </div>
-  <h2>New users, please read the following carefully and provide your consent if you wish to continue this survey:</h2>
 
+  <h2>Please read the following carefully and click 'I Consent to This Survey' to provide your consent and to continue this survey:</h2>
+
+  <h2 class = "heading">ABOUT:</h2>
+  <p class = "overlay-content"><span class = "tab">This</span> survey is brought to you by Jack Flukinger and Rexford Essilfie, rising 2nd year students of Grinnell College undertaking research.
+    By participating in this research you will help us improve current knowledge in the area of Recommender Systems.
+  </p>
+
+
+  <h2 class = "heading">PROCESS:</h2>
+  <p class = "overlay-content"><span class = "tab">In</span> this survey, you will first be registered and then asked a series of questions on some products.
+    Kindly answer all questions asked to the best of your knowledge. At the end of this survey, you may be instructed to return to answer a few more questions.
+    Should this be the case, please look out for an email for further instructions to complete the rest of the survey.
+    At the end of the entire process, you may be contacted via email to recieve monetary compensation for your valuable time!
+    Please review the next section on Data & Privacy and then consent if you wish to continue.
+  </p>
+
+  <h2 class = "heading">DATA & PRIVACY:</h2>
+  <p class = "overlay-content"><span class = "tab">The</span> data provided within this research would be stored securely and will only be used for the purposes of the research.
+    When you complete the first step of the survey, a cookie will be stored on your local computer and will be used as the login token to return you to your most recent stage in the survey.
+    Only the researchers in this study will be able to see any personally identifiable information taken within this survey. Should you decide to stop taking the survey at any point after registration in the first step, simply click on help and select 'Stop'.
+    Following this, any data collected about you would be deleted.
+  </p>
+
+  <h2 style = "text-align: right">I accept the terms above and consent to taking this survey:</h2>
   <input class="consentbtn" type="button" value="I Consent to This Survey" (click)=acceptConsent()>
 </div>
 
