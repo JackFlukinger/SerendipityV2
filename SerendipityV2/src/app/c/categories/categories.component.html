@@ -1,10 +1,17 @@
 <div *ngIf="consent==false" class = "overlay content" [@fade]>
   <h1>welcome</h1>
   <h2>Welcome to the Product Interest Survey!</h2>
-  <h2>Please read the following carefully and provide your consent if you wish to continue this survey:</h2>
+  <div class="bioItems" [@slide]>
+    <h2>Been here before?</h2>
 
-  <h2>I consent to this survey:</h2>
-  <input class="consentbtn" type="button" value="GO" (click)=acceptConsent()>
+    <input
+    type="email"
+    placeholder="Email"
+    autocomplete="none" *ngIf="beenhere">
+  </div>
+  <h2>New users, please read the following carefully and provide your consent if you wish to continue this survey:</h2>
+
+  <input class="consentbtn" type="button" value="I Consent to This Survey" (click)=acceptConsent()>
 </div>
 
 

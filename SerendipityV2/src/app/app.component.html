@@ -3,4 +3,4 @@
 <app-item *ngIf="(StageService.$stage | async) == 2" [@fade]></app-item>
 <app-wait *ngIf="(StageService.$stage | async) == 3" [@slideInOut]></app-wait>
 <app-item *ngIf="(StageService.$stage | async) == 4" [@fade]></app-item>
-<app-complete *ngIf="(StageService.$stage | async) == 5" [@fade]></app-complete>
+<app-complete *ngIf="(StageService.$stage | async) == 5" [@slideInOut]></app-complete>

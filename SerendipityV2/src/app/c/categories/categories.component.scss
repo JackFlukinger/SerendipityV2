@@ -191,7 +191,7 @@ p {
 
 
 .overlay{
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -202,13 +202,22 @@ p {
   text-align: center;
 }
 
+.beenherebutton {
+  width: 33%;
+  padding-top: 20px;
+  background-color: #333333;
+  color: white;
+  z-index: 10;
+}
+
 .consentbtn{
   font-size: 1.2em;
   border: none;
   background-color: #333333;
-  width: 10em;
   height: 3em;
   min-width: 50px;
+  padding-left: 3em;
+  padding-right: 3em;
   color: white;
   transition: .2s;
 

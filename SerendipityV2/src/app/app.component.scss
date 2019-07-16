@@ -1,15 +1,3 @@
-.definition {
-  z-index: 10;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: inherit;
-  text-align: center;
-  font-family: 'Roboto', sans-serif;
-  font-size: 1.5em;
-  font-weight: lighter;
-}
-
 .transparent {
   transition: .2s ease-in;
   opacity: 0;
@@ -20,6 +8,6 @@
   opacity: 1;
 }
 
-app-categories, app-item {
+app-categories, app-item, app-wait, app-complete {
   display: block;
 }
