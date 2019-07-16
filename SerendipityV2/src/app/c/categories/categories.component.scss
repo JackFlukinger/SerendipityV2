@@ -8,10 +8,6 @@ label, .formField{
     padding: 10px;
 }
 
-.content{
-    width: 90%;
-}
-
 .categories{
   margin: auto;
   padding:20px;
@@ -192,6 +188,7 @@ p {
 
 .overlay{
   position: fixed;
+  overflow-y: auto;
   top: 0;
   left: 0;
   right: 0;
@@ -200,14 +197,21 @@ p {
   opacity: 1;
   background-color: white;
   text-align: center;
+  width: 100%;
+  padding-left: 10%;
+  padding-right: 10%;
+  box-sizing:border-box;
 }
 
-.beenherebutton {
-  width: 33%;
-  padding-top: 20px;
-  background-color: #333333;
-  color: white;
-  z-index: 10;
+.emailerror {
+    color: #a94442;
+    transition: .2s;
+    margin-top: .5em;
+    margin-bottom: .5em;
+}
+
+.emailcorrect {
+  opacity: 0;
 }
 
 .consentbtn{
@@ -215,17 +219,16 @@ p {
   border: none;
   background-color: #333333;
   height: 3em;
-  min-width: 50px;
   padding-left: 3em;
   padding-right: 3em;
+  margin-top: 2em;
   color: white;
   transition: .2s;
-  float: right;
+
   &:hover{
-    font-weight: bolder;
+    box-shadow: 0px 0px 2px black inset;
     cursor: pointer;
-    box-shadow: 0px 0px 2px black;
-    }
+  }
 }
 
 .tab{
@@ -239,5 +242,5 @@ p {
 
 .heading{
   text-align: left;
-  text-decoration: underline;
+  font-weight: bold;
 }

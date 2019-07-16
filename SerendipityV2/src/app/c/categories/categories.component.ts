@@ -3,6 +3,7 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { trigger, style, animate, transition } from '@angular/animations';
 import { Category, CategoriesService } from '../../s/categories.service';
 import { User, UserService } from '../../s/user.service';
+import { StageService } from '../../s/stage.service';
 
 @Component({
   selector: 'app-categories',
@@ -39,7 +40,8 @@ export class CategoriesComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private CategoriesService: CategoriesService,
-    private UserService: UserService
+    private UserService: UserService,
+    private StageService: StageService
   ) { }
 
   showDropdown: boolean;
@@ -47,6 +49,7 @@ export class CategoriesComponent implements OnInit {
   selectedCategory: number;
   profileForm: FormGroup;
   serverError: boolean;
+  incorrectemail: boolean;
 
   likedcategories: number[];
 
@@ -60,6 +63,7 @@ export class CategoriesComponent implements OnInit {
     this.loading = false;
     this.likedcategories=[]
     this.serverError = false;
+    this.incorrectemail = false;
 
     this.profileForm = this.fb.group({
       age: ['', [Validators.required, Validators.min(0), Validators.max(110)]],
@@ -112,7 +116,13 @@ export class CategoriesComponent implements OnInit {
     console.log(this.likedcategories);
   }
 
-  acceptConsent(){
-    this.consent=true;
+  submitBeenHere(event: any) {
+    document.cookie = "email=" + event.target.value + "; expires=Thu, 18 Dec 2030 12:00:00 UTC";
+    this.StageService.updateStage();
+    this.incorrectemail = true;
+  }
+
+  acceptConsent() {
+    this.consent = true;
   }
 }

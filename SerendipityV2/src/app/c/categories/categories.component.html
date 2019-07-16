@@ -1,29 +1,30 @@
-<div *ngIf="consent==false" class = "overlay content" [@fade]>
+<div *ngIf="!consent" class="overlay content" [@fade]>
 
   <h1>welcome</h1>
-  <h2>Welcome to the Product Interest Survey!</h2>
-  <div class="bioItems" [@slide]>
-    <h2>Been here before?</h2>
-
-    <input
-    type="email"
-    placeholder="Email"
-    autocomplete="none" *ngIf="beenhere">
+  <h2 style="margin-bottom: 0">Welcome to the Product Interest Survey!</h2>
+  <div class="emailerror" [ngClass]="incorrectemail ? '' : 'emailcorrect'">Invalid Email</div>
+  <div class="bioItems">
+      <input
+      class="beenhere"
+      type="email"
+      placeholder="Been here before? Enter your email."
+      autocomplete="none"
+      style="text-align: center"
+      (keyup)="submitBeenHere($event)">
   </div>
 
   <h2>Please read the following carefully and click 'I Consent to This Survey' to provide your consent and to continue this survey:</h2>
 
-  <h2 class = "heading">ABOUT:</h2>
-  <p class = "overlay-content"><span class = "tab">This</span> survey is brought to you by Jack Flukinger and Rexford Essilfie, rising 2nd year students of Grinnell College undertaking research.
+  <h2 class="heading">ABOUT:</h2>
+  <p class="overlay-content"><span class = "tab">This</span> survey is brought to you by Jack Flukinger and Rexford Essilfie, rising 2nd year students at Grinnell College undertaking research.
     By participating in this research you will help us improve current knowledge in the area of Recommender Systems.
   </p>
 
 
-  <h2 class = "heading">PROCESS:</h2>
-  <p class = "overlay-content"><span class = "tab">In</span> this survey, you will first be registered and then asked a series of questions on some products.
+  <h2 class="heading">PROCESS:</h2>
+  <p class="overlay-content"><span class="tab">In</span> this survey, you will first be registered and then asked a series of questions on some products.
     Kindly answer all questions asked to the best of your knowledge. At the end of this survey, you may be instructed to return to answer a few more questions.
     Should this be the case, please look out for an email for further instructions to complete the rest of the survey.
-    At the end of the entire process, you may be contacted via email to recieve monetary compensation for your valuable time!
     Please review the next section on Data & Privacy and then consent if you wish to continue.
   </p>
 
@@ -34,12 +35,11 @@
     Following this, any data collected about you would be deleted.
   </p>
 
-  <h2 style = "text-align: right">I accept the terms above and consent to taking this survey:</h2>
-  <input class="consentbtn" type="button" value="I Consent to This Survey" (click)=acceptConsent()>
+  <input class="consentbtn" type="button" value="I Accept the Above Terms and I Consent to This Survey" (click)="acceptConsent()">
 </div>
 
 
-<div class = "content" [ngClass]="loading ? 'loading' : ''">
+<div class="content" [ngClass]="loading ? 'loading' : ''" *ngIf="consent">
     <h1>step 1</h1>
     <h2 class="topmessage">Please fill out the following information:</h2>
     <form [formGroup] = "profileForm" (ngSubmit) = "onSubmit()">
