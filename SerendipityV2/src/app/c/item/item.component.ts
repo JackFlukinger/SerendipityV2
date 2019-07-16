@@ -51,7 +51,7 @@ export class ItemComponent implements OnInit {
 
 
   constructor(
-    private ItemService:ItemService,
+    public ItemService:ItemService,
   ) { }
 
 

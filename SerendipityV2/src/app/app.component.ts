@@ -35,7 +35,7 @@ export class AppComponent {
   showDefinition = false;
 
   constructor(
-    private StageService: StageService,
+    public StageService: StageService,
   ) { }
 
   ngOnInit() {
