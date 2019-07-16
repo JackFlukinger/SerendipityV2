@@ -4,11 +4,11 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const sqlite3 = require('sqlite3').verbose();
 
-const recsEach = 10;
+const recsEach = 20;
 
 const app = express();
 
-const dbPath = '../../../serendipityDatabase.db';
+const dbPath = './serendipityDatabase.db';
 
 var corsOptions = {
   origin: '*',
@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(cookieParser());
 
-app.listen(8000, () => {
+app.listen(44444, () => {
   console.log('Server started!');
 });
 

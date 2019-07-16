@@ -30,7 +30,7 @@ export class ItemService {
   ) { }
 
   public getItem(callback) {
-    this.http.get("http://productinterestsurvey.com:8000/api/item").subscribe(
+    this.http.get("http://66.198.247.102:44444/api/item").subscribe(
       data  => {
         if ((data as any).result == 'success') { //Item successfully found
           let id = (data as any).item.itemID;
@@ -61,7 +61,7 @@ export class ItemService {
   }
 
   public rateItem(wouldBuy: boolean, haveHeard: boolean, noRecNeeded: boolean, callback) {
-    this.http.post("http://productinterestsurvey.com:8000/api/item", {
+    this.http.post("http://66.198.247.102:44444/api/item", {
         "itemID": this.item.value.id,
         "wouldBuy":  wouldBuy,
         "haveHeard":  haveHeard,

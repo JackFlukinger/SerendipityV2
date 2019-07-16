@@ -21,7 +21,7 @@ export class UserService {
   ) { }
 
   newUser(user, err) {
-    this.http.post("http://productinterestsurvey.com:8000/api/users", {
+    this.http.post("http://66.198.247.102:44444/api/users", {
         "age":  user.age,
         "gender":  user.gender,
         "email":  user.email,
