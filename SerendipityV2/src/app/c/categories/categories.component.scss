@@ -211,10 +211,24 @@ p {
   min-width: 50px;
   color: white;
   transition: .2s;
-
+  float: right;
   &:hover{
     font-weight: bolder;
     cursor: pointer;
     box-shadow: 0px 0px 2px black;
     }
+}
+
+.tab{
+  //margin-left: 30px;
+}
+
+.overlay-content{
+  text-align: justify;
+  font-size: 1em;
+}
+
+.heading{
+  text-align: left;
+  text-decoration: underline;
 }
