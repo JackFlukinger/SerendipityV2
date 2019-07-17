@@ -2,8 +2,8 @@
   <h1>step 2</h1>
   <h2 class="topmessage">Please consider the item and answer the related questions below.</h2>
   <div class="itemsleft">{{(ItemService.$item | async)?.left}} Items Left</div>
-  <div class="itemview" *ngIf="!loading" [@fade]>
-      <img id="itemimage" src='{{(ItemService.$item | async)?.image}}' alt = '{{(ItemService.$item | async)?.name}} image'>
+  <div class="itemview" [ngClass]="loading ? 'hidden' : ''">
+      <img id="itemimage" src='{{(ItemService.$item | async)?.image}}' alt='{{(ItemService.$item | async)?.name}} image'>
       <div class = "iteminfo">
         <p id="itemname" [innerHtml]="(ItemService.$item | async)?.name"></p>
         <div class="rating">

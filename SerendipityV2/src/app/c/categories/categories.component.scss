@@ -244,3 +244,13 @@ p {
   text-align: left;
   font-weight: bold;
 }
+
+.loadingText {
+  font-family: 'Roboto', sans-serif;
+  background: none;
+  position: fixed;
+  margin-top: 45vh;
+  width: 100%;
+  text-align: center;
+  font-size: 1.4em;
+}

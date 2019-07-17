@@ -40,7 +40,6 @@ export class AppComponent {
 
   ngOnInit() {
     this.StageService.updateStage();
-    console.log(this.StageService.$stage);
   }
 
 }

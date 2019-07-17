@@ -89,7 +89,6 @@ export class CategoriesComponent implements OnInit {
       categories: this.likedcategories
     }
 
-    console.log(user);
 
     //add user to backend using service
     this.UserService.newUser(user, fun => {
@@ -112,8 +111,6 @@ export class CategoriesComponent implements OnInit {
     } else {
       this.likedcategories.push(index);
     }
-    console.log("Has been clicked" + index);
-    console.log(this.likedcategories);
   }
 
   submitBeenHere(event: any) {

@@ -2,24 +2,45 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const sqlite3 = require('sqlite3').verbose();
+const https = require('https');
+const fs = require('fs');
+const mysql = require('mysql');
 
 const recsEach = 20;
 
 const app = express();
 
-const dbPath = './serendipityDatabase.db';
+var dbConfig = {
+        host: 'localhost',
+        user: 'produc31_admin',
+        password: 'g9XQYmDzBEEN3d8',
+        database: 'produc31_db',
+    };
 
-var corsOptions = {
-  origin: '*',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+var conn;
+function handleDisconnect() {
+    conn = mysql.createConnection(dbConfig);  // Recreate the connection, since the old one cannot be reused.
+
+    conn.on('error', function onError(err) {
+        console.log('db error', err);
+        if (err.code == 'PROTOCOL_CONNECTION_LOST') {   // Connection to the MySQL server is usually
+            handleDisconnect();                         // lost due to either server restart, or a
+        } else {                                        // connnection idle timeout (the wait_timeout
+            throw err;                                  // server variable configures this)
+        }
+    });
 }
+handleDisconnect();
 
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({origin: 'https://productinterestsurvey.com', credentials: true}));
 app.use(cookieParser());
 
-app.listen(44444, () => {
+https.createServer({
+  key: fs.readFileSync('server.key'),
+  cert: fs.readFileSync('server.crt')
+}, app)
+.listen(44444, function () {
   console.log('Server started!');
 });
 
@@ -30,57 +51,32 @@ app.get('/api/stage', (req, res) => {
   if (user == undefined) {
     res.send({stage: 1});
   } else {
-    let db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE, (err) => {
-      if (err) {
-        return console.error(err.message);
-      }
-      console.log('Connected to the SQlite database.');
-    });
 
-    let sql = 'SELECT stage FROM users WHERE email = \'' + user + '\';';
+    let sql = 'SELECT stage FROM `users` WHERE email=\'' + user + '\';';
 
-    db.get(sql, (err, row) => {
-      if (row) {
-        console.log(row.stage);
-        res.send({stage: row.stage});
-      } else {
+    conn.query(sql, (err, rows) => {
+      if (err | rows.length == 0) {
         res.send({stage: 1});
+      } else {
+        console.log(rows[0].stage);
+        res.send({stage: rows[0].stage});
       }
-    });
-
-    db.close((err) => {
-      if (err) {
-        return console.error(err.message);
-      }
-      console.log('Closed the database connection.');
     });
   }
 });
 
 app.get('/api/categories', (req, res) => {
-  let db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE, (err) => {
-    if (err) {
-      return console.error(err.message);
-    }
-    console.log('Connected to the SQlite database.');
-  });
 
   let sql = 'SELECT * FROM categories;';
 
-  db.all(sql, (err, rows) => {
-    if (rows) {
-      res.send({categories: rows});
-    } else {
+  conn.query(sql, (err, rows) => {
+    if (err) {
       res.send({result: 'failure'});
+    } else {
+      res.send({categories: rows});
     }
   });
 
-  db.close((err) => {
-    if (err) {
-      return console.error(err.message);
-    }
-    console.log("Closed the database connection.");
-  });
 });
 
 app.post('/api/users', (req, res) => {
@@ -99,19 +95,14 @@ app.post('/api/users', (req, res) => {
 
     console.log(email, age, gender, categories);
 
-    let db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE, (err) => {
-      if (err) {
-        return console.error(err.message);
-      }
-      console.log('Connected to the SQlite database.');
-    });
-
     //SQL to generate the random movies for the random recommender
-    let randomSQL = 'SELECT itemID,categories FROM items ORDER BY RANDOM() LIMIT ' + (recsEach * 2) + ';';
+    let randomSQL = 'SELECT itemID,categories FROM `items` WHERE itemID IN (SELECT itemID FROM (SELECT itemID FROM `items` ORDER BY RAND() LIMIT ' + (recsEach * 2) + ') t)'
 
-    db.all(randomSQL, (err, rows) => {
+    conn.query(randomSQL, (err, rows) => {
       if (err) {
-        throw err;
+        console.error('error connecting: ' + err.stack);
+        res.send({result: "failure"});
+        return;
       }
       let randomMovies = [];
       let almostRandomMovies = [];
@@ -139,7 +130,7 @@ app.post('/api/users', (req, res) => {
       randomMovies + '\', \'' +
       almostRandomMovies + '\');';
 
-      db.run(sql, function(err) {
+      conn.query(sql, function(err) {
         if (err) {
           console.log(err);
           res.send({result: "failure"});
@@ -150,12 +141,6 @@ app.post('/api/users', (req, res) => {
       });
     });
 
-    db.close((err) => {
-      if (err) {
-        return console.error(err.message);
-      }
-      console.log('Closed the database connection.');
-    });
   }
 });
 
@@ -166,27 +151,21 @@ app.get('/api/item', (req, res) => {
   if (user == undefined) {
     res.send({result: "failure"});
   } else {
-    let db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE, (err) => {
-      if (err) {
-        res.send({result: "failure"});
-        return console.error(err.message);
-      }
-      console.log('Connected to the SQlite database.');
-    });
 
     let sql = 'SELECT RRSitems, ARRSitems, SRSitems FROM users WHERE email=\''+ user + '\';';
 
-    db.get(sql, (err, row) => {
-      if (row) {
-
+    conn.query(sql, (err, rows) => {
+      if (rows.length > 0) {
+        let row = rows[0];
         if (row.RRSitems != undefined) {
           let firstItem = row.RRSitems.split(",")[0];
           let remaining = row.RRSitems.split(",").length + row.ARRSitems.split(",").length - 1;
           console.log(firstItem);
           let querySql = 'SELECT * FROM items WHERE itemID=\'' + firstItem + '\';';
 
-          db.get(querySql, (err, row) => {
-            if (row) {
+          conn.query(querySql, (err, rows) => {
+            if (rows.length > 0) {
+              let row = rows[0];
               console.log(row);
               res.send({result: 'success', item: row, left: remaining});
             } else {
@@ -201,8 +180,9 @@ app.get('/api/item', (req, res) => {
           console.log(firstItem);
           let querySql = 'SELECT * FROM items WHERE itemID=\'' + firstItem + '\';';
 
-          db.get(querySql, (err, row) => {
-            if (row) {
+          conn.query(querySql, (err, rows) => {
+            if (rows.length > 0) {
+              let row = rows[0];
               console.log(row);
               res.send({result: 'success', item: row, left: remaining});
             } else {
@@ -216,8 +196,9 @@ app.get('/api/item', (req, res) => {
           console.log(firstItem);
           let querySql = 'SELECT * FROM items WHERE itemID=\'' + firstItem + '\';';
 
-          db.get(querySql, (err, row) => {
-            if (row) {
+          conn.query(querySql, (err, rows) => {
+            if (rows.length > 0) {
+              let row = rows[0];
               console.log(row);
               res.send({result: 'success', item: row, left: remaining});
             } else {
@@ -228,14 +209,15 @@ app.get('/api/item', (req, res) => {
 
           let stageSQL = 'SELECT stage FROM users WHERE email = \'' + user + '\';'; //Get current stage
 
-          db.get(stageSQL, (err, row) => {
-            if (row) {
+          conn.query(stageSQL, (err, rows) => {
+            if (rows.length > 0) {
+              let row = rows[0];
               console.log(row.stage);
               nextStage = parseInt(row.stage) + 1;
 
               let doneSql = 'UPDATE users SET stage=\'' + nextStage + '\' WHERE email = \'' + user + '\';';
 
-              db.run(doneSql, function(err) {
+              conn.query(doneSql, function(err) {
                 if (err) {
                   console.log(err);
                   res.send({result: "failure"});
@@ -255,12 +237,6 @@ app.get('/api/item', (req, res) => {
       }
     });
 
-    db.close((err) => {
-      if (err) {
-        return console.error(err.message);
-      }
-      console.log("Closed the database connection.");
-    });
   }
 });
 
@@ -277,20 +253,12 @@ app.post('/api/item', (req, res) => {
     let haveHeard = req.body.haveHeard;
     let noRecNeeded = req.body.noRecNeeded;
 
-    let db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE, (err) => {
-      if (err) {
-        res.send({result: "failure"});
-        return console.error(err.message);
-      }
-      console.log('Connected to the SQlite database.');
-    });
-
 
     let sql = 'SELECT RRSitems, ARRSitems, SRSitems FROM users WHERE email=\''+ user + '\';';
 
-    db.get(sql, (err, row) => {
-      if (row) {
-
+    conn.query(sql, (err, rows) => {
+      if (rows.length > 0) {
+        let row = rows[0];
         let firstItem = null;
         let table = null;
         let column = null;
@@ -329,20 +297,19 @@ app.post('/api/item', (req, res) => {
             editSQL = 'UPDATE users SET ' + column + '=null WHERE email=\'' + user + '\';';
           }
 
-          db.run(editSQL, function(err) {
+          conn.query(editSQL, function(err) {
             if (err) {
               console.log(err);
               res.send({result: "failure"});
             } else {
-              addRatingSQL = 'INSERT INTO ' + table + '(email, itemID, wouldBuy, haveHeard, noRecNeeded, timestamp)  VALUES (\'' +
+              addRatingSQL = 'INSERT INTO ' + table + '(email, itemID, wouldBuy, haveHeard, noRecNeeded)  VALUES (\'' +
               user + '\', \'' +
               itemID + '\', \'' +
               wouldBuy + '\', \'' +
               haveHeard + '\', \'' +
-              noRecNeeded + '\', \'' +
-              Date.now().toString() + '\');';
+              noRecNeeded + '\');';
 
-              db.run(addRatingSQL, function(err) {
+              conn.query(addRatingSQL, function(err) {
                 if (err) {
                   console.log(err);
                   res.send({result: "failure"});
@@ -358,13 +325,6 @@ app.post('/api/item', (req, res) => {
       } else {
         res.send({result: "failure"});
       }
-    });
-
-    db.close((err) => {
-      if (err) {
-        return console.error(err.message);
-      }
-      console.log("Closed the database connection.");
     });
 
   }

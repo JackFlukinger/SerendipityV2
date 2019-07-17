@@ -16,7 +16,7 @@ export class StageService {
   ) { }
 
   public updateStage() {
-    this.http.get("http://66.198.247.102:44444/api/stage").subscribe(
+    this.http.get("https://productinterestsurvey.com:44444/api/stage", { withCredentials: true }).subscribe(
       data  => {
         this.stage.next((data as any).stage);
         console.log(this.stage);

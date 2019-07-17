@@ -16,6 +16,8 @@
   flex-flow: wrap;
   justify-content: center;
   min-height: inherit;
+  transition-delay: .5s;
+  transition: .2s;
 }
 
 img {
@@ -192,6 +194,10 @@ input:focus {
   text-align: center;
   margin-top:auto;
   color: #ffb01f;
+}
+
+.hidden {
+  opacity: 0;
 }
 
 @media only screen and (max-width: 999px) {

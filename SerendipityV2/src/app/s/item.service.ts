@@ -30,7 +30,7 @@ export class ItemService {
   ) { }
 
   public getItem(callback) {
-    this.http.get("http://66.198.247.102:44444/api/item").subscribe(
+    this.http.get("https://productinterestsurvey.com:44444/api/item", { withCredentials: true }).subscribe(
       data  => {
         if ((data as any).result == 'success') { //Item successfully found
           let id = (data as any).item.itemID;
@@ -48,7 +48,7 @@ export class ItemService {
           let left = parseInt((data as any).left);
           let newItem:Item = {id: id, name: name, description: description, price: price, rating: rating, numratings: numratings, image: image, left: left};
           this.item.next(newItem);
-          console.log(newItem);
+          //console.log(newItem);
         } else if ((data as any).result == 'nextstage') { //If user has completed all ratings
           this.StageService.updateStage();
         } else { //Backend failure
@@ -57,16 +57,16 @@ export class ItemService {
     }, error  => {
       console.log("Error", error);
     });
-    callback();
+    setTimeout(function(){ callback(); }, 300);
   }
 
   public rateItem(wouldBuy: boolean, haveHeard: boolean, noRecNeeded: boolean, callback) {
-    this.http.post("http://66.198.247.102:44444/api/item", {
+    this.http.post("https://productinterestsurvey.com:44444/api/item", {
         "itemID": this.item.value.id,
         "wouldBuy":  wouldBuy,
         "haveHeard":  haveHeard,
         "noRecNeeded":  noRecNeeded
-      }).subscribe(
+      }, { withCredentials: true }).subscribe(
       data  => {
         if ((data as any).result == "success") {
           console.log("success");

@@ -77,7 +77,6 @@ export class ItemComponent implements OnInit {
       this.resetResponses();
       this.loading = false;
     });
-    console.log([wouldBuy, haveHeard, noRecNeeded]);
 
   }
 

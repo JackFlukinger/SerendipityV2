@@ -21,12 +21,12 @@ export class UserService {
   ) { }
 
   newUser(user, err) {
-    this.http.post("http://66.198.247.102:44444/api/users", {
+    this.http.post("https://productinterestsurvey.com:44444/api/users", {
         "age":  user.age,
         "gender":  user.gender,
         "email":  user.email,
         "categories": user.categories
-      }).subscribe(
+      }, { withCredentials: true }).subscribe(
       data  => {
         if ((data as any).result == "success") {
           console.log("success");

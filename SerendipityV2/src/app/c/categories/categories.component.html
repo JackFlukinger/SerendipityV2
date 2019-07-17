@@ -38,7 +38,7 @@
   <input class="consentbtn" type="button" value="I Accept the Above Terms and I Consent to This Survey" (click)="acceptConsent()">
 </div>
 
-
+<div class="loadingText" *ngIf="loading" [@fade]>Generating Items...<br />Please be patient, this will take a couple of minutes!</div>
 <div class="content" [ngClass]="loading ? 'loading' : ''" *ngIf="consent">
     <h1>step 1</h1>
     <h2 class="topmessage">Please fill out the following information:</h2>

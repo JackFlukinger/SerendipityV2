@@ -18,7 +18,7 @@ export class CategoriesService {
   ) { }
 
   public loadCategories(callback) {
-    this.http.get("http://66.198.247.102:44444/api/categories").subscribe(
+    this.http.get("https://productinterestsurvey.com:44444/api/categories", { withCredentials: true }).subscribe(
       data  => {
         let cats = {}; //Populated with categories
         (data as any).categories.forEach(category => {
