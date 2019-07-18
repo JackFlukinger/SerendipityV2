@@ -50,16 +50,15 @@ label, .formField{
 
 .subCatBtn {
   border: none;
-  background: none;
+  background: #333333;
   padding: 10px;
   color: white;
   text-shadow: 0px 0px 2px black;
-  transition-property: background-color;
   transition-duration: .2s;
 
   &:hover {
-    background-color: #386f38;
-    font-weight: bold;
+    box-shadow: 0 0 2px #0000007a;
+    transform: translateY(-10px) scale(1.1);
     cursor: pointer;
   }
 }
@@ -124,21 +123,26 @@ input[type=submit] {
 }
 
 .dropdownContainer {
+  position: relative;
   margin: 0;
   display: inline-block;
   width: 33%;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .dropdown {
-  width: 33%;
+  width: 100%;
   position: absolute;
-  left: 33%;
+  right: 0;
   background: #333333;
   color: white;
   text-align: left;
   padding-left: 10px;
-  padding-top: 10px;
   overflow-y: hidden;
+  transition: .3s;
 }
 
 .dropdownItem {
@@ -146,6 +150,7 @@ input[type=submit] {
   font-size: 1em;
   font-family: 'Roboto', sans-serif;
   margin-bottom: 10px;
+  position: relative;
 }
 
 .dropdownItem:hover {
@@ -218,12 +223,15 @@ p {
   font-size: 1.2em;
   border: none;
   background-color: #333333;
-  height: 3em;
+  padding-top: 1em;
+  padding-bottom: 1em;
   padding-left: 3em;
   padding-right: 3em;
   margin-top: 2em;
+  margin-bottom: 1em;
   color: white;
   transition: .2s;
+  white-space: normal;
 
   &:hover{
     box-shadow: 0px 0px 2px black inset;
@@ -236,7 +244,7 @@ p {
 }
 
 .overlay-content{
-  text-align: justify;
+  text-align: left;
   font-size: 1em;
 }
 
@@ -247,10 +255,15 @@ p {
 
 .loadingText {
   font-family: 'Roboto', sans-serif;
+  font-weight: bold;
   background: none;
   position: fixed;
   margin-top: 45vh;
   width: 100%;
   text-align: center;
   font-size: 1.4em;
+}
+
+.compressed {
+  transform: translateY(-50%) scaleY(0);
 }

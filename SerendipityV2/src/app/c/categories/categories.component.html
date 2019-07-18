@@ -9,7 +9,7 @@
       type="email"
       placeholder="Been here before? Enter your email."
       autocomplete="none"
-      style="text-align: center"
+      style="text-align: center; width: 100%"
       (keyup)="submitBeenHere($event)">
   </div>
 
@@ -38,7 +38,7 @@
   <input class="consentbtn" type="button" value="I Accept the Above Terms and I Consent to This Survey" (click)="acceptConsent()">
 </div>
 
-<div class="loadingText" *ngIf="loading" [@fade]>Generating Items...<br />Please be patient, this will take a couple of minutes!</div>
+<div class="loadingText" *ngIf="loading" [@fade]>Generating Items...<br />Please be patient, this may take a while!</div>
 <div class="content" [ngClass]="loading ? 'loading' : ''" *ngIf="consent">
     <h1>step 1</h1>
     <h2 class="topmessage">Please fill out the following information:</h2>
@@ -52,20 +52,22 @@
             (focusin)="showDropdown=true"
             (focusout)="showDropdown=false"
             (mouseenter)="showDropdown=true"
-            (mouseleave)="showDropdown=false">
+            (mouseleave)="showDropdown=false"
+            tabindex="0">
               <input
               type="text"
               formControlName="gender"
               placeholder="Gender *"
               style="width:100%"
+              tabindex="-1"
               readonly>
-              <div *ngIf="showDropdown" class="dropdown" [@slide]>
+              <div class="dropdown" [ngClass]="showDropdown ? '' : 'compressed'"> <!--*ngIf="showDropdown"-->
                 <li class="dropdownItem"
-                (click)="this.profileForm.get('gender').setValue('Male'); showDropdown=false">Male</li>
+                (click)="profileForm.get('gender').setValue('Male'); showDropdown=false">Male</li>
                 <li class="dropdownItem"
-                (click)="this.profileForm.get('gender').setValue('Female'); showDropdown=false">Female</li>
+                (click)="profileForm.get('gender').setValue('Female'); showDropdown=false">Female</li>
                 <li class="dropdownItem"
-                (click)="this.profileForm.get('gender').setValue('Other'); showDropdown=false">Other</li>
+                (click)="profileForm.get('gender').setValue('Other'); showDropdown=false">Other</li>
               </div>
             </div>
             <input
@@ -81,7 +83,13 @@
               <input type="button" class="catBtn" id="{{ category.id }}" value ="{{ category.name }}">
               <div class="subCatContainer" *ngIf="selectedCategory == category.id" [@slide]>
                 <div style="padding-bottom: 15px">
-                  <input type="button" class="subCatBtn" *ngFor="let subCategory of category.children" id="{{ subCategory.id }}" [ngClass]="this.likedcategories.indexOf(subCategory.id) > -1 ? 'selected' : ''" (click)="toggleSubCat(subCategory.id); $event.stopPropagation()" value ="{{ subCategory.name }}">
+                  <input type="button"
+                  class="subCatBtn"
+                  *ngFor="let subCategory of category.children"
+                  id="{{ subCategory.id }}"
+                  [ngClass]="this.likedcategories.indexOf(subCategory.id) > -1 ? 'selected' : ''"
+                  (click)="toggleSubCat(subCategory.id); $event.stopPropagation()"
+                  value ="{{ subCategory.name }}">
                 </div>
               </div>
             </div>

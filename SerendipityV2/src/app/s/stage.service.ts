@@ -24,4 +24,12 @@ export class StageService {
       console.log("Error", error);
     });
   }
+
+  public getStep() {
+    let step = 2;
+    if (this.stage.value == 4) {
+      step = 3;
+    }
+    return step;
+  }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ItemService, Item } from '../../s/item.service';
+import { StageService } from '../../s/stage.service';
 import { style, state, animate, transition, trigger } from '@angular/animations';
 
 @Component({
@@ -45,13 +46,14 @@ export class ItemComponent implements OnInit {
   q1answer: boolean;
   q2answer: boolean;
   q3answer: boolean;
-
+  step: number;
 
   responses: string[];
 
 
   constructor(
     public ItemService:ItemService,
+    private StageService:StageService
   ) { }
 
 
@@ -66,6 +68,8 @@ export class ItemComponent implements OnInit {
     this.ItemService.getItem(func => {
       this.loading = false;
     });
+
+    this.step = this.StageService.getStep();
   }
 
   submitRating(){

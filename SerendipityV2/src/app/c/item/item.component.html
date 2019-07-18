@@ -1,9 +1,11 @@
 <div class="wrapper">
-  <h1>step 2</h1>
+  <h1>step {{ step }}</h1>
   <h2 class="topmessage">Please consider the item and answer the related questions below.</h2>
   <div class="itemsleft">{{(ItemService.$item | async)?.left}} Items Left</div>
   <div class="itemview" [ngClass]="loading ? 'hidden' : ''">
-      <img id="itemimage" src='{{(ItemService.$item | async)?.image}}' alt='{{(ItemService.$item | async)?.name}} image'>
+      <div class="imagecontainer">
+        <img src='{{(ItemService.$item | async)?.image}}' alt='{{(ItemService.$item | async)?.name}} image'>
+      </div>
       <div class = "iteminfo">
         <p id="itemname" [innerHtml]="(ItemService.$item | async)?.name"></p>
         <div class="rating">
@@ -19,79 +21,79 @@
         <p id="itemdescription" [innerHtml]="(ItemService.$item | async)?.description"></p>
       </div>
   </div>
-  <div class="questionsContainer">
+</div>
+<div class="questionsContainer">
 
-    <div class="questions" [ngClass]="openq==1 ? 'selectedQuestion' : ''" (click)="openq=1">
-      <div class="questionNum">
-        <h2>Q1</h2>
-      </div>
-      <div class="questionInfo">
-        <h2>I would buy this product.</h2>
-        <div class="choices">
-          <input
-          type='button'
-          class="n"
-          value='no'
-          [ngClass]="(q1answer!=null && !q1answer) ? 'selected-n':''"
-          (click)="q1answer=false; openq=getUnanswered(); $event.stopPropagation()">
+  <div class="questions" [ngClass]="openq==1 ? 'selectedQuestion' : ''" (click)="openq=1">
+    <div class="questionNum">
+      <h2>Q1</h2>
+    </div>
+    <div class="questionInfo">
+      <h2>I would buy this product.</h2>
+      <div class="choices">
+        <input
+        type='button'
+        class="n"
+        value='no'
+        [ngClass]="(q1answer!=null && !q1answer) ? 'selected-n':''"
+        (click)="q1answer=false; openq=getUnanswered(); $event.stopPropagation()">
 
-          <input
-          type='button'
-          class="y"
-          value='yes'
-          [ngClass]="(q1answer!=null && q1answer) ? 'selected-y':''"
-          (click)="q1answer=true; openq=getUnanswered(); $event.stopPropagation()">
-        </div>
+        <input
+        type='button'
+        class="y"
+        value='yes'
+        [ngClass]="(q1answer!=null && q1answer) ? 'selected-y':''"
+        (click)="q1answer=true; openq=getUnanswered(); $event.stopPropagation()">
       </div>
     </div>
-
-    <div class="questions" [ngClass]="openq==2 ? 'selectedQuestion' : ''"  (click)="openq=2">
-      <div class="questionNum">
-        <h2>Q2</h2>
-      </div>
-      <div class="questionInfo">
-        <h2>I have heard of this product already.</h2>
-        <div class="choices">
-          <input
-          type='button'
-          class="n"
-          value='no'
-          [ngClass]="(q2answer!=null && !q2answer) ? 'selected-n':''"
-          (click)="q2answer=false; openq=getUnanswered(); $event.stopPropagation()">
-
-          <input
-          type='button'
-          class="y"
-          value='yes'
-          [ngClass]="(q2answer!=null && q2answer) ? 'selected-y':''"
-          (click)="q2answer=true; openq=getUnanswered(); $event.stopPropagation()">
-        </div>
-      </div>
-    </div>
-
-    <div class="questions" [ngClass]="openq==3 ? 'selectedQuestion' : ''"  (click)="openq=3">
-      <div class="questionNum">
-        <h2>Q3</h2>
-      </div>
-      <div class="questionInfo">
-        <h2>I would have found this product on my own.</h2>
-        <div class="choices">
-            <input
-            type='button'
-            class="n"
-            value='no'
-            [ngClass]="(q3answer!=null && !q3answer) ? 'selected-n':''"
-            (click)="q3answer=false; openq=getUnanswered(); $event.stopPropagation()">
-
-            <input
-            type='button'
-            class="y"
-            value='yes'
-            [ngClass]="(q3answer!=null && q3answer) ? 'selected-y':''"
-            (click)="q3answer=true; openq=getUnanswered(); $event.stopPropagation()">
-          </div>
-        </div>
-    </div>
-    <input class="nxtBtn" *ngIf="q1answer!=null && q2answer!=null && q3answer!=null" type="submit" value="next>" (click)="submitRating()" [@expand]>
   </div>
+
+  <div class="questions" [ngClass]="openq==2 ? 'selectedQuestion' : ''"  (click)="openq=2">
+    <div class="questionNum">
+      <h2>Q2</h2>
+    </div>
+    <div class="questionInfo">
+      <h2>I have heard of this product already.</h2>
+      <div class="choices">
+        <input
+        type='button'
+        class="n"
+        value='no'
+        [ngClass]="(q2answer!=null && !q2answer) ? 'selected-n':''"
+        (click)="q2answer=false; openq=getUnanswered(); $event.stopPropagation()">
+
+        <input
+        type='button'
+        class="y"
+        value='yes'
+        [ngClass]="(q2answer!=null && q2answer) ? 'selected-y':''"
+        (click)="q2answer=true; openq=getUnanswered(); $event.stopPropagation()">
+      </div>
+    </div>
+  </div>
+
+  <div class="questions" [ngClass]="openq==3 ? 'selectedQuestion' : ''"  (click)="openq=3">
+    <div class="questionNum">
+      <h2>Q3</h2>
+    </div>
+    <div class="questionInfo">
+      <h2>I would have found this product on my own.</h2>
+      <div class="choices">
+          <input
+          type='button'
+          class="n"
+          value='no'
+          [ngClass]="(q3answer!=null && !q3answer) ? 'selected-n':''"
+          (click)="q3answer=false; openq=getUnanswered(); $event.stopPropagation()">
+
+          <input
+          type='button'
+          class="y"
+          value='yes'
+          [ngClass]="(q3answer!=null && q3answer) ? 'selected-y':''"
+          (click)="q3answer=true; openq=getUnanswered(); $event.stopPropagation()">
+        </div>
+      </div>
+  </div>
+  <input class="nxtBtn" *ngIf="q1answer!=null && q2answer!=null && q3answer!=null" type="submit" value="next>" (click)="submitRating()" [@expand]>
 </div>

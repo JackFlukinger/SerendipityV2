@@ -4,8 +4,14 @@ body {
   margin: 0;
 }
 
+input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
 .loading {
-  opacity: .2;
+  opacity: .1;
   transition: .2s;
   pointer-events: none;
 }
